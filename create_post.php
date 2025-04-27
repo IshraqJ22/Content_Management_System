@@ -34,6 +34,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true); // Create the directory if it doesn't exist
         }
+
+        // Validate image dimensions
+        list($width, $height) = getimagesize($_FILES['image_banner']['tmp_name']);
+        if ($width != 1600 || $height != 650) {
+            echo "<p style='color:red;'>The banner image must be exactly 1600x650 pixels.</p>";
+            exit;
+        }
+
         $imageBanner = basename($_FILES['image_banner']['name']);
         move_uploaded_file($_FILES['image_banner']['tmp_name'], $uploadDir . $imageBanner);
     }

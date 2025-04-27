@@ -1,1 +1,39 @@
-// File deleted as the comment functionality is no longer required.
+<?php
+require 'db_config.php';
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['blog_id'], $_POST['comment'])) {
+    $blogId = $_POST['blog_id'];
+    $comment = $_POST['comment'];
+
+    // Fetch the logged-in user's user_id
+    $stmt = $pdo->prepare("SELECT user_id FROM users WHERE username = ?");
+    $stmt->execute([$_SESSION['username']]);
+    $user = $stmt->fetch();
+
+    if (!$user) {
+        echo "<p style='color:red;'>User not found.</p>";
+        exit;
+    }
+
+    $userId = $user['user_id'];
+
+    // Insert the comment into the database with status 'Pending'
+    $stmt = $pdo->prepare("INSERT INTO comments (blog_id, user_id, content, status, created_at) VALUES (?, ?, ?, 'Pending', NOW())");
+    $stmt->execute([$blogId, $userId, $comment]);
+
+    // Fetch the post owner's user_id
+    $stmt = $pdo->prepare("SELECT user_id FROM blogs WHERE blog_id = ?");
+    $stmt->execute([$blogId]);
+    $postOwner = $stmt->fetch();
+
+    if ($postOwner && $postOwner['user_id'] != $userId) {
+        // Insert a notification for the post owner
+        $stmt = $pdo->prepare("INSERT INTO notifications (user_id, message) VALUES (?, ?)");
+        $stmt->execute([$postOwner['user_id'], "Your post received a new comment."]);
+    }
+
+    header("Location: landing_page.php");
+    exit;
+}
+?>

@@ -25,6 +25,16 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $stmt = $pdo->query("SELECT blogs.*, users.username AS author_username FROM blogs JOIN users ON blogs.user_id = users.user_id WHERE blogs.status = 'pending' ORDER BY blogs.created_at DESC");
 $pendingPosts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// Fetch all pending comments
+$stmt = $pdo->query("
+    SELECT comments.*, users.username AS commenter_username 
+    FROM comments 
+    JOIN users ON comments.user_id = users.user_id 
+    WHERE comments.status = 'Pending' 
+    ORDER BY comments.created_at DESC
+");
+$pendingComments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 // Handle admin actions
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['delete_user'])) {
@@ -71,6 +81,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = $pdo->prepare("DELETE FROM blogs WHERE blog_id = ?");
         $stmt->execute([$blogId]);
         echo "<script>alert('Blog post deleted successfully.'); window.location.href = 'user_management.php';</script>";
+    }
+
+    // Approve a comment
+    if (isset($_POST['approve_comment'])) {
+        $commentId = $_POST['comment_id'];
+        $adminUsername = $_SESSION['username'];
+
+        // Fetch the user_id of the admin
+        $stmt = $pdo->prepare("SELECT user_id FROM users WHERE username = ?");
+        $stmt->execute([$adminUsername]);
+        $admin = $stmt->fetch();
+
+        if ($admin) {
+            $adminId = $admin['user_id'];
+
+            // Update the comment to mark it as approved
+            $stmt = $pdo->prepare("UPDATE comments SET status = 'Approved', approved_by = ?, approved_at = NOW() WHERE comment_id = ?");
+            $stmt->execute([$adminId, $commentId]);
+
+            echo "<script>alert('Comment approved successfully.'); window.location.href = 'user_management.php';</script>";
+        } else {
+            echo "<script>alert('Failed to approve the comment. Admin not found.');</script>";
+        }
+    }
+
+    // Delete a comment
+    if (isset($_POST['delete_comment'])) {
+        $commentId = $_POST['comment_id'];
+        $stmt = $pdo->prepare("DELETE FROM comments WHERE comment_id = ?");
+        $stmt->execute([$commentId]);
+
+        echo "<script>alert('Comment deleted successfully.'); window.location.href = 'user_management.php';</script>";
     }
 }
 ?>
@@ -276,6 +318,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .btn-success:hover {
             background-color: #218838;
         }
+
+        .main-content {
+            margin-left: 250px; /* Ensure the main content is spaced from the sidebar */
+            padding: 20px;
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0; /* Remove margin for mobile view */
+                padding: 10px;
+            }
+        }
     </style>
      <script>
         function toggleSearch() {
@@ -348,7 +403,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
     
-    <div class="container">
+    <div class="main-content">
         <h1>User Management</h1>
         <div class="search-container" id="search-container" style="margin-bottom: 20px;">
             <input type="text" id="search-input" placeholder="Search for a username..." style="padding: 10px; font-size: 16px; border: 1px solid #ced4da; border-radius: 5px; width: 80%; margin-right: 10px;">
@@ -416,6 +471,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <input type="hidden" name="blog_id" value="<?php echo $post['blog_id']; ?>">
                                 <button type="submit" name="approve_post" class="btn-success">Approve</button>
                                 <button type="submit" name="delete_post" class="btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+        <h2>Pending Comments</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Comment ID</th>
+                    <th>Content</th>
+                    <th>Commenter</th>
+                    <th>Blog ID</th>
+                    <th>Created At</th>
+                    <th>Approved By</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($pendingComments as $comment): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($comment['comment_id']); ?></td>
+                        <td><?php echo nl2br(htmlspecialchars($comment['content'])); ?></td>
+                        <td><?php echo htmlspecialchars($comment['commenter_username']); ?></td>
+                        <td><?php echo htmlspecialchars($comment['blog_id']); ?></td>
+                        <td><?php echo htmlspecialchars($comment['created_at']); ?></td>
+                        <td><?php echo htmlspecialchars($comment['approved_by'] ?? 'N/A'); ?></td>
+                        <td>
+                            <form action="user_management.php" method="POST" style="display: inline;">
+                                <input type="hidden" name="comment_id" value="<?php echo $comment['comment_id']; ?>">
+                                <button type="submit" name="approve_comment" class="btn-success">Approve</button>
+                                <button type="submit" name="delete_comment" class="btn-danger">Delete</button>
                             </form>
                         </td>
                     </tr>

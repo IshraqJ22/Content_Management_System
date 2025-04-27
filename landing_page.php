@@ -28,6 +28,11 @@ $user = $stmt->fetch();
 
 // Fetch total online users
 $totalOnlineUsers = $pdo->query("SELECT COUNT(*) FROM users WHERE is_online = 1")->fetchColumn();
+
+// Fetch unread notifications count
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM notifications WHERE user_id = ? AND is_read = 0");
+$stmt->execute([$user['user_id']]);
+$unreadNotifications = $stmt->fetchColumn();
 ?>
 
 <!DOCTYPE html>
@@ -365,11 +370,14 @@ $totalOnlineUsers = $pdo->query("SELECT COUNT(*) FROM users WHERE is_online = 1"
                 </div>
                 Profile
             </a>
-            <a href="#">
+            <a href="notifications.php">
                 <div class="icon">
                     <img src="images/notifications.png" alt="Notification Icon">
                 </div>
                 Notification
+                <?php if ($unreadNotifications > 0): ?>
+                    <span style="color: red; font-weight: bold;">(<?php echo $unreadNotifications; ?>)</span>
+                <?php endif; ?>
             </a>
             <?php if ($user['is_admin'] == 1): ?>
                 <a href="user_management.php" class="user-management">

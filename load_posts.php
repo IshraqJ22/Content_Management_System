@@ -60,9 +60,9 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 foreach ($posts as $post) {
     // Use a default image if image_url is empty or NULL
     $imageUrl = !empty($post['image_url']) ? "uploads/" . htmlspecialchars($post['image_url']) : "images/default_banner.png";
-    ?>
+?>
     <div class="blog-post" data-blog-id="<?php echo $post['blog_id']; ?>">
-        <div class="content-banner" style="background-color: #d9d9d9; height: 200px; display: flex; justify-content: center; align-items: center;">
+        <div class="content-banner" style="background-color: #E0E0E0; height: 200px; display: flex; justify-content: center; align-items: center;">
             <img src="<?php echo !empty($post['image_url']) ? 'uploads/' . htmlspecialchars($post['image_url']) : 'images/default_banner.png'; ?>" alt="Content Image Banner" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
         <div class="post-header" style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
@@ -76,7 +76,7 @@ foreach ($posts as $post) {
                 </div>
             </div>
             <div class="post-meta" style="text-align: right; font-size: 12px; color: #666;">
-                <p style="margin: 0;">Approved by: 
+                <p style="margin: 0;">Approved by:
                     <?php echo htmlspecialchars($post['approved_by_username'] ?? 'N/A'); ?>
                 </p>
                 <p style="margin: 0;">Create date: <?php echo htmlspecialchars($post['created_at']); ?></p>
@@ -85,6 +85,67 @@ foreach ($posts as $post) {
         <div class="post-content" style="padding: 15px; font-size: 14px; line-height: 1.6; color: #555;">
             <p><?php echo nl2br(htmlspecialchars($post['content'])); ?></p>
         </div>
+        <div style="margin-top: 10px;">
+            <form action="like_post.php" method="POST" style="display: inline;">
+                <input type="hidden" name="blog_id" value="<?php echo $post['blog_id']; ?>">
+                <button type="submit" style="padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ffffff;
+            color:rgb(0, 0, 0);
+            border: 1px solid #E0E0E0;
+            border-radius: 5px;
+            cursor: pointer;">
+                    <?php
+                    // Check if the user has liked the post
+                    $likeStmt = $pdo->prepare("SELECT * FROM likes WHERE blog_id = ? AND user_id = ?");
+                    $likeStmt->execute([$post['blog_id'], $loggedInUserId]);
+                    $isLiked = $likeStmt->rowCount() > 0;
+                    echo $isLiked ? "Unlike" : "Like";
+                    ?>
+                    (<?php echo $post['like_count']; ?>)
+                </button>
+            </form>
+        </div>
+        <div style="margin-top: 10px;">
+            <form action="comment_post.php" method="POST">
+                <input type="hidden" name="blog_id" value="<?php echo $post['blog_id']; ?>">
+                <textarea name="comment" rows="2" placeholder="Write a comment..." style="width: 100%; padding: 5px; margin-bottom: 5px;" required></textarea>
+                <button type="submit" style="padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ffffff;
+            color:rgb(0, 0, 0);
+            border: 1px solid #E0E0E0;
+            border-radius: 5px;
+            cursor: pointer;">Comment</button>
+            </form>
+        </div>
+        <!-- Display comments -->
+        <div style="margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px;">
+            <h4>Comments:</h4>
+            <?php
+            $commentStmt = $pdo->prepare("
+                SELECT comments.content, comments.created_at, users.username AS commenter_username 
+                FROM comments 
+                JOIN users ON comments.user_id = users.user_id 
+                WHERE comments.blog_id = ? AND comments.status = 'Approved' 
+                ORDER BY comments.created_at DESC 
+                LIMIT 3
+            ");
+            $commentStmt->execute([$post['blog_id']]);
+            $comments = $commentStmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($comments as $comment) {
+                echo "<p><strong><a href='user_profile.php?username=" . urlencode($comment['commenter_username']) . "' style='text-decoration: none; color: black;'>" . htmlspecialchars($comment['commenter_username']) . "</a>:</strong> " . htmlspecialchars($comment['content']) .
+                    " <span style='font-size: 12px; color: #666;'>(" . htmlspecialchars($comment['created_at']) . ")</span></p>";
+            }
+            ?>
+            <a href="view_post.php?blog_id=<?php echo $post['blog_id']; ?>" style="padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ffffff;
+            color:rgb(0, 0, 0);
+            border: 1px solid #E0E0E0;
+            border-radius: 5px;
+            cursor: pointer;">See More</a>
+        </div>
         <?php if ($isAdmin): ?>
             <form action="delete_post.php" method="POST" style="text-align: right; margin-top: 10px;">
                 <input type="hidden" name="blog_id" value="<?php echo $post['blog_id']; ?>">
@@ -92,6 +153,6 @@ foreach ($posts as $post) {
             </form>
         <?php endif; ?>
     </div>
-    <?php
+<?php
 }
 ?>

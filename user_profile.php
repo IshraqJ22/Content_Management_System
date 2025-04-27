@@ -2,16 +2,32 @@
 require 'db_config.php';
 session_start();
 
+// Ensure the user is logged in
+if (!isset($_SESSION['username']) || !isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
+
 $username = isset($_GET['username']) ? $_GET['username'] : $_SESSION['username'];
 
-// Fetch user details from the database
-$stmt = $pdo->prepare("SELECT username, email, name, phone_no, date_of_birth, bio, profile_picture FROM users WHERE username = ?");
+// Fetch user details from the database, including user_id
+$stmt = $pdo->prepare("SELECT user_id, username, email, name, phone_no, date_of_birth, bio, profile_picture FROM users WHERE username = ?");
 $stmt->execute([$username]);
 $user = $stmt->fetch();
 
 if (!$user) {
     echo "<p style='color:red;'>User not found.</p>";
     exit;
+}
+
+$loggedInUserId = $_SESSION['user_id'];
+
+// Check if the logged-in user is already following the profile user
+$isFollowing = false;
+if ($loggedInUserId != $user['user_id']) {
+    $stmt = $pdo->prepare("SELECT * FROM follows WHERE follower_id = ? AND followed_id = ?");
+    $stmt->execute([$loggedInUserId, $user['user_id']]);
+    $isFollowing = $stmt->rowCount() > 0;
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -32,12 +48,69 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: index.php");
         exit();
     }
+
+    if (isset($_POST['follow_action'])) {
+        if ($_POST['follow_action'] === 'follow') {
+            $stmt = $pdo->prepare("INSERT INTO follows (follower_id, followed_id) VALUES (?, ?)");
+            $stmt->execute([$loggedInUserId, $user['user_id']]);
+        } elseif ($_POST['follow_action'] === 'unfollow') {
+            $stmt = $pdo->prepare("DELETE FROM follows WHERE follower_id = ? AND followed_id = ?");
+            $stmt->execute([$loggedInUserId, $user['user_id']]);
+        }
+        header("Location: user_profile.php?username=" . urlencode($username));
+        exit;
+    }
 }
 
-// Fetch all posts created by the current user
-$stmt = $pdo->prepare("SELECT * FROM blogs WHERE user_id = (SELECT user_id FROM users WHERE username = ?) ORDER BY created_at DESC");
+// Fetch all posts created by the current user along with like and comment counts
+$stmt = $pdo->prepare("
+    SELECT blogs.*, 
+           (SELECT COUNT(*) FROM likes WHERE likes.blog_id = blogs.blog_id) AS like_count,
+           (SELECT COUNT(*) FROM comments WHERE comments.blog_id = blogs.blog_id) AS comment_count
+    FROM blogs 
+    WHERE user_id = (SELECT user_id FROM users WHERE username = ?) 
+    ORDER BY created_at DESC
+");
 $stmt->execute([$username]);
 $userPosts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_post'])) {
+    $blogId = $_POST['blog_id'];
+
+    // Delete the post and associated likes and comments
+    $pdo->beginTransaction();
+    try {
+        $stmt = $pdo->prepare("DELETE FROM likes WHERE blog_id = ?");
+        $stmt->execute([$blogId]);
+
+        $stmt = $pdo->prepare("DELETE FROM comments WHERE blog_id = ?");
+        $stmt->execute([$blogId]);
+
+        $stmt = $pdo->prepare("DELETE FROM blogs WHERE blog_id = ?");
+        $stmt->execute([$blogId]);
+
+        $pdo->commit();
+        echo "<script>alert('Post deleted successfully.'); window.location.href = 'user_profile.php';</script>";
+    } catch (Exception $e) {
+        $pdo->rollBack();
+        echo "<p style='color:red;'>Failed to delete the post. Error: " . htmlspecialchars($e->getMessage()) . "</p>";
+    }
+}
+
+// Fetch post count
+$stmt = $pdo->prepare("SELECT COUNT(*) AS post_count FROM blogs WHERE user_id = ?");
+$stmt->execute([$user['user_id']]);
+$postCount = $stmt->fetchColumn();
+
+// Fetch follower count
+$stmt = $pdo->prepare("SELECT COUNT(*) AS follower_count FROM follows WHERE followed_id = ?");
+$stmt->execute([$user['user_id']]);
+$followerCount = $stmt->fetchColumn();
+
+// Fetch following count
+$stmt = $pdo->prepare("SELECT COUNT(*) AS following_count FROM follows WHERE follower_id = ?");
+$stmt->execute([$user['user_id']]);
+$followingCount = $stmt->fetchColumn();
 ?>
 
 <!DOCTYPE html>
@@ -223,7 +296,41 @@ $userPosts = $stmt->fetchAll(PDO::FETCH_ASSOC);
             font-size: 14px;
             color: #666;
         }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .profile-stats div {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .profile-stats div span {
+            display: block;
+            font-size: 14px;
+            color: #666;
+        }
     </style>
+    <script>
+        function toggleSearch() {
+            const searchContainer = document.getElementById('search-container');
+            searchContainer.style.display = searchContainer.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function searchUser() {
+            const username = document.getElementById('search-input').value.trim();
+            if (username) {
+                window.location.href = `user_profile.php?username=${encodeURIComponent(username)}`;
+            } else {
+                alert('Please enter a username to search.');
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -233,7 +340,7 @@ $userPosts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
 
         <div class="menu">
-            <a href="landing_page.php" class="active">
+            <a href="landing_page.php">
                 <div class="icon">
                     <img src="images/home.png" alt="Home Icon">
                 </div>
@@ -245,13 +352,17 @@ $userPosts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 Search
             </a>
-            <a href="user_profile.php">
+            <div class="search-container" id="search-container" style="display: none; margin-top: 10px; text-align: center;">
+                <input type="text" id="search-input" placeholder="Search for a username..." style="padding: 10px; font-size: 16px; border: 1px solid #ced4da; border-radius: 5px; width: 80%; margin-right: 10px;">
+                <button onclick="searchUser()" style="padding: 10px 20px; font-size: 16px; background-color: #ffffff; color: #000000; border: 1px solid #E0E0E0; border-radius: 5px; cursor: pointer;">Search</button>
+            </div>
+            <a href="user_profile.php" class="active">
                 <div class="icon">
                     <img src="images/user.png" alt="Profile Icon">
                 </div>
                 Profile
             </a>
-            <a href="#">
+            <a href="notifications.php">
                 <div class="icon">
                     <img src="images/notifications.png" alt="Notification Icon">
                 </div>
@@ -276,13 +387,56 @@ $userPosts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <p>@<?php echo htmlspecialchars($user['username']); ?></p>
                 <p><?php echo htmlspecialchars($user['email']); ?></p>
             </div>
+            <?php if ($loggedInUserId != $user['user_id']): ?>
+                <form action="user_profile.php?username=<?php echo urlencode($username); ?>" method="POST" style="margin-top: 10px;">
+                    <input type="hidden" name="follow_action" value="<?php echo $isFollowing ? 'unfollow' : 'follow'; ?>">
+                    <button type="submit" style="padding: 5px 10px; font-size: 14px; background-color: <?php echo $isFollowing ? '#ff4d4d' : '#6c63ff'; ?>; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        <?php echo $isFollowing ? 'Unfollow' : 'Follow'; ?>
+                    </button>
+                </form>
+            <?php endif; ?>
+        </div>
+
+        <!-- Profile Stats Section -->
+        <div class="profile-stats">
+            <div>
+                <?php echo $postCount; ?>
+                <span>Posts</span>
+            </div>
+            <div>
+                <a href="followers_following.php?type=followers&user_id=<?php echo $user['user_id']; ?>" style="text-decoration: none; color: inherit;">
+                    <?php echo $followerCount; ?>
+                    <span>Followers</span>
+                </a>
+            </div>
+            <div>
+                <a href="followers_following.php?type=following&user_id=<?php echo $user['user_id']; ?>" style="text-decoration: none; color: inherit;">
+                    <?php echo $followingCount; ?>
+                    <span>Following</span>
+                </a>
+            </div>
         </div>
 
         <div class="bio-section">
             <h2>Bio</h2>
             <p><?php echo nl2br(htmlspecialchars($user['bio'])); ?></p>
         </div>
+        <div style="margin-bottom: 20px;">
+            <a href="edit_profile.php" style="text-decoration: none;">
+                <button style="padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ffffff;
+            color:rgb(0, 0, 0);
+            border: 1px solid #E0E0E0;
+            border-radius: 5px;
+            cursor: pointer;">Edit Profile</button>
+            </a>
+            <a href="create_post.php" style="text-decoration: none; margin-left: 10px;">
+                <button style="padding: 10px 20px; font-size: 14px; background-color: #ffffff; color:rgb(0, 0, 0); border: 1px solid #E0E0E0; border-radius: 5px; cursor: pointer;">Create Post</button>
+            </a>
+        </div>
         <hr>
+        
         <div class="posts-section">
             <?php if (!empty($userPosts)): ?>
                 <?php foreach ($userPosts as $post): ?>
@@ -291,6 +445,16 @@ $userPosts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <h3><?php echo htmlspecialchars($post['title']); ?></h3>
                         <p><?php echo nl2br(htmlspecialchars($post['content'])); ?></p>
                         <p style="font-size: 12px; color: #666;">Created on: <?php echo htmlspecialchars($post['created_at']); ?></p>
+                        <p style="font-size: 12px; color: #666;">Likes: <?php echo htmlspecialchars($post['like_count']); ?> | Comments: <?php echo htmlspecialchars($post['comment_count']); ?></p>
+                        <div style="margin-top: 10px;">
+                            <a href="view_post.php?blog_id=<?php echo $post['blog_id']; ?>" style="text-decoration: none;">
+                                <button style="padding: 10px 20px; font-size: 16px; background-color: #ffffff; color:rgb(0, 0, 0); border: 1px solid #E0E0E0; border-radius: 5px; cursor: pointer;">See More</button>
+                            </a>
+                        </div>
+                        <form action="user_profile.php" method="POST" style="margin-top: 10px;">
+                            <input type="hidden" name="blog_id" value="<?php echo $post['blog_id']; ?>">
+                            <button type="submit" name="delete_post" style="padding: 10px 20px; font-size: 16px; background-color: #ff4d4d; color: white; border: none; border-radius: 5px; cursor: pointer;">Delete Post</button>
+                        </form>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>

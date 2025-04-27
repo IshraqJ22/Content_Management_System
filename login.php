@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($user && password_verify($password, $user['password_hash'])) {
             $_SESSION['username'] = $user['username'];
-            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['user_id'] = $user['user_id']; // Ensure user_id is set in the session
 
             $stmt = $pdo->prepare("UPDATE users SET is_online = 1 WHERE username = ?");
             $stmt->execute([$user['username']]);
