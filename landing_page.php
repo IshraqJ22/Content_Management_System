@@ -130,10 +130,13 @@ $unreadNotifications = $stmt->fetchColumn();
         }
 
         .sidebar .menu .user-management-icon {
-            width: 25px; /* Adjusted size for the user management icon */
+            width: 25px;
+            /* Adjusted size for the user management icon */
             height: 25px;
-            margin-bottom: 0; /* Ensure proper alignment */
-            border-radius: 0; /* No border radius for this specific icon */
+            margin-bottom: 0;
+            /* Ensure proper alignment */
+            border-radius: 0;
+            /* No border radius for this specific icon */
         }
 
         .sidebar .menu a.user-management {
@@ -190,7 +193,7 @@ $unreadNotifications = $stmt->fetchColumn();
             padding: 10px 20px;
             font-size: 16px;
             background-color: #ffffff;
-            color:rgb(0, 0, 0);
+            color: rgb(0, 0, 0);
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;
@@ -203,7 +206,7 @@ $unreadNotifications = $stmt->fetchColumn();
         .content-banner {
             width: 100%;
             height: 200px;
-            background-color:rgb(255, 253, 253);
+            background-color: rgb(255, 253, 253);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -225,27 +228,34 @@ $unreadNotifications = $stmt->fetchColumn();
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px; /* Adjusted spacing */
-            padding: 10px; /* Added padding for better spacing */
-            background-color: #f9f9f9; /* Optional: Add a background color for clarity */
-            border-bottom: 1px solid #e0e0e0; /* Optional: Add a separator */
+            margin-bottom: 10px;
+            /* Adjusted spacing */
+            padding: 10px;
+            /* Added padding for better spacing */
+            background-color: #f9f9f9;
+            /* Optional: Add a background color for clarity */
+            border-bottom: 1px solid #e0e0e0;
+            /* Optional: Add a separator */
         }
 
         .blog-post .post-header .user-info {
             display: flex;
             align-items: center;
-            gap: 10px; /* Ensure proper spacing between elements */
+            gap: 10px;
+            /* Ensure proper spacing between elements */
         }
 
         .blog-post .post-header .user-info img {
-            width: 40px; /* Adjusted size */
+            width: 40px;
+            /* Adjusted size */
             height: 40px;
             border-radius: 50%;
             object-fit: cover;
         }
 
         .blog-post .post-header .post-meta {
-            font-size: 12px; /* Adjusted font size */
+            font-size: 12px;
+            /* Adjusted font size */
             color: #666;
             text-align: right;
         }
@@ -282,7 +292,7 @@ $unreadNotifications = $stmt->fetchColumn();
             padding: 10px 20px;
             font-size: 16px;
             background-color: #ffffff;
-            color:rgb(0, 0, 0);
+            color: rgb(0, 0, 0);
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;
@@ -296,7 +306,7 @@ $unreadNotifications = $stmt->fetchColumn();
             padding: 5px 10px;
             font-size: 16px;
             background-color: #ffffff;
-            color:rgb(0, 0, 0);
+            color: rgb(0, 0, 0);
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;
@@ -361,9 +371,9 @@ $unreadNotifications = $stmt->fetchColumn();
                 Search
             </a>
             <div class="search-container" id="search-container">
-            <input type="text" id="search-input" placeholder="Search for a username...">
-            <button onclick="searchUser()">Search</button>
-        </div>
+                <input type="text" id="search-input" placeholder="Search for a username...">
+                <button onclick="searchUser()">Search</button>
+            </div>
             <a href="user_profile.php">
                 <div class="icon">
                     <img src="images/user.png" alt="Profile Icon">
@@ -400,7 +410,7 @@ $unreadNotifications = $stmt->fetchColumn();
 
     <div class="main-content">
         <p class="online-users">Total online users: <?php echo $totalOnlineUsers; ?></p>
-        <hr>        
+        <hr>
 
         <div class="search-container" id="search-container">
             <input type="text" id="search-input" placeholder="Search for a username...">

@@ -203,7 +203,7 @@ $followingCount = $stmt->fetchColumn();
             padding: 5px 10px;
             font-size: 16px;
             background-color: #ffffff;
-            color:rgb(0, 0, 0);
+            color: rgb(0, 0, 0);
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;
@@ -390,7 +390,13 @@ $followingCount = $stmt->fetchColumn();
             <?php if ($loggedInUserId != $user['user_id']): ?>
                 <form action="user_profile.php?username=<?php echo urlencode($username); ?>" method="POST" style="margin-top: 10px;">
                     <input type="hidden" name="follow_action" value="<?php echo $isFollowing ? 'unfollow' : 'follow'; ?>">
-                    <button type="submit" style="padding: 5px 10px; font-size: 14px; background-color: <?php echo $isFollowing ? '#ff4d4d' : '#6c63ff'; ?>; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    <button type="submit" style="padding: 5px 10px; font-size: 14px; background-color: <?php echo $isFollowing ? '#ff4d4d' : '#6c63ff'; ?>;padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ffffff;
+            color:rgb(0, 0, 0);
+            border: 1px solid #E0E0E0;
+            border-radius: 5px;
+            cursor: pointer;">
                         <?php echo $isFollowing ? 'Unfollow' : 'Follow'; ?>
                     </button>
                 </form>
@@ -436,7 +442,7 @@ $followingCount = $stmt->fetchColumn();
             </a>
         </div>
         <hr>
-        
+
         <div class="posts-section">
             <?php if (!empty($userPosts)): ?>
                 <?php foreach ($userPosts as $post): ?>
