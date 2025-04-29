@@ -239,7 +239,7 @@ if (!$user) {
         <form action="comment_post.php" method="POST">
             <input type="hidden" name="blog_id" value="<?php echo $blogId; ?>">
             <textarea name="comment" rows="3" placeholder="Write a comment..." style="width: 100%; padding: 10px; margin-bottom: 10px;" required></textarea>
-            <button type="submit" style="background-color: #6c63ff; color: white; border: none; padding: 10px 20px; border-radius: 5px;">Post Comment</button>
+            <button type="submit" style="padding: 10px 20px; font-size: 14px; background-color: #ffffff; color:rgb(0, 0, 0); border: 1px solid #E0E0E0; border-radius: 5px; cursor: pointer;">Post Comment</button>
         </form>
     </div>
 </body>

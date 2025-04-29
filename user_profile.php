@@ -39,14 +39,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (isset($_POST['remove_user']) && $username === $_SESSION['username']) {
-        // Delete user data from the database
-        $stmt = $pdo->prepare("DELETE FROM users WHERE username = ?");
-        $stmt->execute([$username]);
+        try {
+            // Begin a transaction
+            $pdo->beginTransaction();
 
-        session_unset();
-        session_destroy();
-        header("Location: index.php");
-        exit();
+            // Fetch all blog IDs associated with the user
+            $stmt = $pdo->prepare("SELECT blog_id FROM blogs WHERE user_id = ?");
+            $stmt->execute([$loggedInUserId]);
+            $blogIds = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+            if (!empty($blogIds)) {
+                // Delete likes associated with the user's blogs
+                $stmt = $pdo->prepare("DELETE FROM likes WHERE blog_id IN (" . implode(',', array_fill(0, count($blogIds), '?')) . ")");
+                $stmt->execute($blogIds);
+
+                // Delete comments associated with the user's blogs
+                $stmt = $pdo->prepare("DELETE FROM comments WHERE blog_id IN (" . implode(',', array_fill(0, count($blogIds), '?')) . ")");
+                $stmt->execute($blogIds);
+
+                // Delete the user's blogs
+                $stmt = $pdo->prepare("DELETE FROM blogs WHERE blog_id IN (" . implode(',', array_fill(0, count($blogIds), '?')) . ")");
+                $stmt->execute($blogIds);
+            }
+
+            // Delete likes made by the user
+            $stmt = $pdo->prepare("DELETE FROM likes WHERE user_id = ?");
+            $stmt->execute([$loggedInUserId]);
+
+            // Delete comments made by the user
+            $stmt = $pdo->prepare("DELETE FROM comments WHERE user_id = ?");
+            $stmt->execute([$loggedInUserId]);
+
+            // Delete follows associated with the user
+            $stmt = $pdo->prepare("DELETE FROM follows WHERE follower_id = ? OR followed_id = ?");
+            $stmt->execute([$loggedInUserId, $loggedInUserId]);
+
+            // Delete notifications associated with the user
+            $stmt = $pdo->prepare("DELETE FROM notifications WHERE user_id = ?");
+            $stmt->execute([$loggedInUserId]);
+
+            // Finally, delete the user
+            $stmt = $pdo->prepare("DELETE FROM users WHERE user_id = ?");
+            $stmt->execute([$loggedInUserId]);
+
+            // Commit the transaction
+            $pdo->commit();
+
+            session_unset();
+            session_destroy();
+            header("Location: login.php"); // Redirect to the login page
+            exit();
+        } catch (Exception $e) {
+            // Rollback the transaction in case of an error
+            $pdo->rollBack();
+            echo "<p style='color:red;'>Failed to delete the profile. Error: " . htmlspecialchars($e->getMessage()) . "</p>";
+        }
     }
 
     if (isset($_POST['follow_action'])) {
@@ -441,6 +488,14 @@ $followingCount = $stmt->fetchColumn();
                 <button style="padding: 10px 20px; font-size: 14px; background-color: #ffffff; color:rgb(0, 0, 0); border: 1px solid #E0E0E0; border-radius: 5px; cursor: pointer;">Create Post</button>
             </a>
         </div>
+        <?php if ($loggedInUserId == $user['user_id']): ?>
+            <form action="user_profile.php" method="POST" style="margin-top: 10px;" onsubmit="return confirm('Are you sure you want to delete your profile? This action cannot be undone.');">
+                <input type="hidden" name="remove_user" value="1">
+                <button type="submit" style="padding: 10px 20px; font-size: 16px; background-color: #ff4d4d; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    Delete Profile
+                </button>
+            </form>
+        <?php endif; ?>
         <hr>
 
         <div class="posts-section">

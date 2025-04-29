@@ -48,9 +48,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($userToDelete && $userToDelete['username'] === $_SESSION['username']) {
             echo "<script>alert('You cannot delete your own account.');</script>";
         } else {
-            $stmt = $pdo->prepare("DELETE FROM users WHERE user_id = ?");
-            $stmt->execute([$userId]);
-            echo "<script>alert('User deleted successfully.'); window.location.href = 'user_management.php';</script>";
+            try {
+                // Begin a transaction
+                $pdo->beginTransaction();
+
+                // Fetch all blog IDs associated with the user
+                $stmt = $pdo->prepare("SELECT blog_id FROM blogs WHERE user_id = ?");
+                $stmt->execute([$userId]);
+                $blogIds = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+                if (!empty($blogIds)) {
+                    // Delete likes associated with the user's blogs
+                    $stmt = $pdo->prepare("DELETE FROM likes WHERE blog_id IN (" . implode(',', array_fill(0, count($blogIds), '?')) . ")");
+                    $stmt->execute($blogIds);
+
+                    // Delete comments associated with the user's blogs
+                    $stmt = $pdo->prepare("DELETE FROM comments WHERE blog_id IN (" . implode(',', array_fill(0, count($blogIds), '?')) . ")");
+                    $stmt->execute($blogIds);
+
+                    // Delete the user's blogs
+                    $stmt = $pdo->prepare("DELETE FROM blogs WHERE blog_id IN (" . implode(',', array_fill(0, count($blogIds), '?')) . ")");
+                    $stmt->execute($blogIds);
+                }
+
+                // Delete likes made by the user
+                $stmt = $pdo->prepare("DELETE FROM likes WHERE user_id = ?");
+                $stmt->execute([$userId]);
+
+                // Delete comments made by the user
+                $stmt = $pdo->prepare("DELETE FROM comments WHERE user_id = ?");
+                $stmt->execute([$userId]);
+
+                // Delete follows associated with the user
+                $stmt = $pdo->prepare("DELETE FROM follows WHERE follower_id = ? OR followed_id = ?");
+                $stmt->execute([$userId, $userId]);
+
+                // Delete notifications associated with the user
+                $stmt = $pdo->prepare("DELETE FROM notifications WHERE user_id = ?");
+                $stmt->execute([$userId]);
+
+                // Finally, delete the user
+                $stmt = $pdo->prepare("DELETE FROM users WHERE user_id = ?");
+                $stmt->execute([$userId]);
+
+                // Commit the transaction
+                $pdo->commit();
+
+                echo "<script>alert('User deleted successfully.'); window.location.href = 'user_management.php';</script>";
+            } catch (Exception $e) {
+                // Rollback the transaction in case of an error
+                $pdo->rollBack();
+                echo "<p style='color:red;'>Failed to delete the user. Error: " . htmlspecialchars($e->getMessage()) . "</p>";
+            }
         }
     }
 
