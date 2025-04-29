@@ -1,5 +1,16 @@
 <?php
 require 'db_config.php';
+
+// Use a unique session identifier for each window
+if (isset($_GET['session_id'])) {
+    session_id($_GET['session_id']);
+} elseif (isset($_COOKIE['window_session_id'])) {
+    session_id($_COOKIE['window_session_id']);
+} else {
+    $newSessionId = bin2hex(random_bytes(16));
+    setcookie('window_session_id', $newSessionId, 0, '/');
+    session_id($newSessionId);
+}
 session_start();
 
 // Handle logout logic before any output
@@ -337,7 +348,7 @@ $unreadNotifications = $stmt->fetchColumn();
         function searchUser() {
             const username = document.getElementById('search-input').value.trim();
             if (username) {
-                window.location.href = `user_profile.php?username=${encodeURIComponent(username)}`;
+                window.location.href = `user_profile.php?username=${encodeURIComponent(username)}&session_id=<?php echo session_id(); ?>`;
             } else {
                 alert('Please enter a username to search.');
             }
@@ -358,7 +369,7 @@ $unreadNotifications = $stmt->fetchColumn();
             </div>
         </div>
         <div class="menu">
-            <a href="#" class="active">
+            <a href="landing_page.php?session_id=<?php echo session_id(); ?>" class="active">
                 <div class="icon">
                     <img src="images/home.png" alt="Home Icon">
                 </div>
@@ -374,13 +385,13 @@ $unreadNotifications = $stmt->fetchColumn();
                 <input type="text" id="search-input" placeholder="Search for a username...">
                 <button onclick="searchUser()">Search</button>
             </div>
-            <a href="user_profile.php">
+            <a href="user_profile.php?session_id=<?php echo session_id(); ?>">
                 <div class="icon">
                     <img src="images/user.png" alt="Profile Icon">
                 </div>
                 Profile
             </a>
-            <a href="notifications.php">
+            <a href="notifications.php?session_id=<?php echo session_id(); ?>">
                 <div class="icon">
                     <img src="images/notifications.png" alt="Notification Icon">
                 </div>
@@ -390,7 +401,7 @@ $unreadNotifications = $stmt->fetchColumn();
                 <?php endif; ?>
             </a>
             <?php if ($user['is_admin'] == 1): ?>
-                <a href="user_management.php" class="user-management">
+                <a href="user_management.php?session_id=<?php echo session_id(); ?>" class="user-management">
                     <div class="icon">
                         <img src="images/admin.png" alt="Admin Icon" class="user-management-icon">
                     </div>
@@ -398,7 +409,7 @@ $unreadNotifications = $stmt->fetchColumn();
                 </a>
             <?php endif; ?>
         </div>
-        <form action="landing_page.php" method="POST" style="margin-top: auto; text-align: center; padding-bottom: 20px;">
+        <form action="landing_page.php?session_id=<?php echo session_id(); ?>" method="POST" style="margin-top: auto; text-align: center; padding-bottom: 20px;">
             <button type="submit" name="logout" class="btn-primary">
                 <div class="icon">
                     <img src="images/logout.png" alt="Logout Icon">
@@ -418,7 +429,7 @@ $unreadNotifications = $stmt->fetchColumn();
         </div>
 
         <div class="create-post">
-            <a href="create_post.php">
+            <a href="create_post.php?session_id=<?php echo session_id(); ?>">
                 <button>Create Post</button>
             </a>
         </div>
@@ -445,7 +456,8 @@ $unreadNotifications = $stmt->fetchColumn();
                     url: "load_posts.php",
                     type: "GET",
                     data: {
-                        page: page
+                        page: page,
+                        session_id: '<?php echo session_id(); ?>'
                     },
                     success: function(data) {
                         if (data.trim() !== "") {
