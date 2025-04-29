@@ -354,7 +354,7 @@ $unreadNotifications = $stmt->fetchColumn();
             <img src="<?php echo !empty($user['profile_picture']) ? 'uploads/' . htmlspecialchars($user['profile_picture']) : 'images/default_user.png'; ?>" alt="Profile Picture" style="width: 130px; height: 130px; object-fit: cover;">
             <div style="display: flex; flex-direction: column;">
                 <p style="margin: 0; font-weight: bold; color: black;"><?php echo htmlspecialchars($user['username']); ?></p>
-                <p style="margin: 0; font-size: 14px; color: #666;"><?php echo htmlspecialchars($user['user_id']); ?></p>
+                <p style="margin: 0; font-size: 14px; color: #666;">User id: <?php echo htmlspecialchars($user['user_id']); ?></p>
             </div>
         </div>
         <div class="menu">
