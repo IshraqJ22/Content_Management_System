@@ -449,7 +449,7 @@ $followingCount = $stmt->fetchColumn();
             <?php endif; ?>
         </div>
 
-        <!-- Profile Stats Section -->
+        
         <div class="profile-stats">
             <div>
                 <?php echo $postCount; ?>
