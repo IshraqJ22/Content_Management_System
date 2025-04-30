@@ -30,16 +30,16 @@ if (!$post) {
 
 // Fetch all comments for the blog post
 $commentStmt = $pdo->prepare("
-    SELECT comments.content, comments.created_at, users.username AS commenter_username 
+    SELECT comments.comment_id, comments.content, comments.created_at, users.username AS commenter_username 
     FROM comments 
     JOIN users ON comments.user_id = users.user_id 
-    WHERE comments.blog_id = ? AND comments.status = 'Approved' 
+    WHERE comments.blog_id = ? 
     ORDER BY comments.created_at DESC
 ");
 $commentStmt->execute([$blogId]);
 $comments = $commentStmt->fetchAll(PDO::FETCH_ASSOC);
 // Fetch the logged-in user's user_id
-$stmt = $pdo->prepare("SELECT user_id, username, profile_picture FROM users WHERE username = ?");
+$stmt = $pdo->prepare("SELECT user_id, username, profile_picture, is_admin FROM users WHERE username = ?");
 $stmt->execute([$_SESSION['username']]);
 $user = $stmt->fetch();
 
@@ -102,9 +102,9 @@ if (!$user) {
         }
 
         .sidebar .user-info img {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            border-radius: 0;
             object-fit: cover;
         }
 
@@ -134,18 +134,51 @@ if (!$user) {
         .sidebar .menu .icon {
             margin-right: 10px;
             width: 20px;
-            height: 20px;
+            height: 29px;
+        }
+
+        .btn-primary {
+            padding: 5px 10px;
+            font-size: 16px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            border: 1px solid #E0E0E0;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            background-color: #e0e0e0;
         }
 
         .main-content {
             margin-left: 250px;
             padding: 20px;
             flex: 1;
+            min-height: 100vh;
+            background-color: #ffffff;
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .profile-header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         .container {
             max-width: 800px;
-            margin: 50px auto;
+            margin: 0 auto;
             padding: 20px;
             background-color: #ffffff;
             border: 1px solid #ddd;
@@ -158,34 +191,88 @@ if (!$user) {
             margin-bottom: 20px;
         }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
+        img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
         }
 
-        ul li {
+        .comment-section {
+            margin-top: 30px;
+        }
+
+        .comment-section h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .comment-section p {
+            margin-bottom: 10px;
+        }
+
+        .comment-form textarea {
+            width: 100%;
             padding: 10px;
-            border-bottom: 1px solid #ddd;
+            margin-bottom: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
         }
 
-        ul li:last-child {
-            border-bottom: none;
+        .comment-form button {
+            padding: 10px 20px;
+            font-size: 14px;
+            background-color: #ffffff;
+            color:rgb(0, 0, 0);
+            border: 1px solid #E0E0E0;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
-        ul li span {
-            font-size: 12px;
-            color: #666;
+        .comment-form button:hover {
+            background-color: #E0E0E0;
+        }
+
+
+        .delete-button {
+            padding: 10px 20px;
+            font-size: 14px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #e60000;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 10px;
+            }
+
+            .container {
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
-<div class="sidebar">
+    <div class="sidebar">
         <div class="logo-container">
             <img src="images/BLOGr_logo.png" alt="BLOGr Logo">
         </div>
         <div class="user-info">
             <img src="<?php echo !empty($user['profile_picture']) ? 'uploads/' . htmlspecialchars($user['profile_picture']) : 'images/default_user.png'; ?>" alt="Profile Picture">
-            <p style="margin: 0; font-weight: bold; color: black;"><?php echo htmlspecialchars($user['username']); ?></p>
+            <p><?php echo htmlspecialchars($user['username']); ?></p>
         </div>
         <div class="menu">
             <a href="landing_page.php">
@@ -204,7 +291,7 @@ if (!$user) {
                 <div class="icon">
                     <img src="images/notifications.png" alt="Notification Icon">
                 </div>
-                Notification
+                Notifications
             </a>
         </div>
         <form action="landing_page.php" method="POST" style="margin-top: auto; text-align: center; padding-bottom: 20px;">
@@ -216,31 +303,52 @@ if (!$user) {
             </button>
         </form>
     </div>
-    <div class="container">
-        <h1><?php echo htmlspecialchars($post['title']); ?></h1>
-        <p style="font-size: 14px; color: #666;">By: <?php echo htmlspecialchars($post['author_username']); ?> | Created on: <?php echo htmlspecialchars($post['created_at']); ?></p>
-        <img src="<?php echo !empty($post['image_url']) ? 'uploads/' . htmlspecialchars($post['image_url']) : 'images/default_banner.png'; ?>" alt="Post Image" style="width: 100%; height: auto; margin-bottom: 20px;">
-        <p><?php echo nl2br(htmlspecialchars($post['content'])); ?></p>
-        <p style="font-size: 14px; color: #666;">Likes: <?php echo htmlspecialchars($post['like_count']); ?></p>
-        <hr>
-        <h2>Comments</h2>
-        <?php foreach ($comments as $comment): ?>
-            <p>
-                <strong>
-                    <a href="user_profile.php?username=<?php echo urlencode($comment['commenter_username']); ?>" style="text-decoration: none; color: #6c63ff;">
-                        <?php echo htmlspecialchars($comment['commenter_username']); ?>
-                    </a>:
-                </strong> 
-                <?php echo htmlspecialchars($comment['content']); ?> 
-                <span style="font-size: 12px; color: #666;">(<?php echo htmlspecialchars($comment['created_at']); ?>)</span>
-            </p>
-        <?php endforeach; ?>
-        <hr>
-        <form action="comment_post.php" method="POST">
-            <input type="hidden" name="blog_id" value="<?php echo $blogId; ?>">
-            <textarea name="comment" rows="3" placeholder="Write a comment..." style="width: 100%; padding: 10px; margin-bottom: 10px;" required></textarea>
-            <button type="submit" style="padding: 10px 20px; font-size: 14px; background-color: #ffffff; color:rgb(0, 0, 0); border: 1px solid #E0E0E0; border-radius: 5px; cursor: pointer;">Post Comment</button>
-        </form>
+    <div class="main-content">
+        <div class="container">
+            <h1><?php echo htmlspecialchars($post['title']); ?></h1>
+            <p>By: <?php echo htmlspecialchars($post['author_username']); ?> | Created on: <?php echo htmlspecialchars($post['created_at']); ?></p>
+            <img src="<?php echo !empty($post['image_url']) ? 'uploads/' . htmlspecialchars($post['image_url']) : 'images/default_banner.png'; ?>" alt="Post Image">
+            <p><?php echo nl2br(htmlspecialchars($post['content'])); ?></p>
+            <p>Likes: <?php echo htmlspecialchars($post['like_count']); ?></p>
+            <form action="like_post.php" method="POST" style="margin-bottom: 20px;">
+                <input type="hidden" name="blog_id" value="<?php echo $blogId; ?>">
+                <button type="submit" class="btn-primary">
+                    <?php
+                    // Check if the user has already liked the post
+                    $stmt = $pdo->prepare("SELECT * FROM likes WHERE blog_id = ? AND user_id = ?");
+                    $stmt->execute([$blogId, $user['user_id']]);
+                    $isLiked = $stmt->rowCount() > 0;
+                    echo $isLiked ? "Unlike" : "Like";
+                    ?>
+                </button>
+            </form>
+            <hr>
+            <div class="comment-section">
+                <h2>Comments</h2>
+                <?php foreach ($comments as $comment): ?>
+                    <p>
+                        <strong>
+                            <a href="user_profile.php?username=<?php echo urlencode($comment['commenter_username']); ?>">
+                                <?php echo htmlspecialchars($comment['commenter_username']); ?>
+                            </a>:
+                        </strong> 
+                        <?php echo htmlspecialchars($comment['content']); ?> 
+                        <span>(<?php echo htmlspecialchars($comment['created_at']); ?>)</span>
+                        <?php if ($user['user_id'] == $post['user_id'] || $user['username'] == $comment['commenter_username'] || $user['is_admin'] == 1): ?>
+                            <form action="delete_comment.php" method="POST" style="display: inline;">
+                                <input type="hidden" name="comment_id" value="<?php echo $comment['comment_id']; ?>">
+                                <button type="submit" class="delete-button">Delete</button>
+                            </form>
+                        <?php endif; ?>
+                    </p>
+                <?php endforeach; ?>
+                <form action="comment_post.php" method="POST" class="comment-form">
+                    <input type="hidden" name="blog_id" value="<?php echo $blogId; ?>">
+                    <textarea name="comment" rows="3" placeholder="Write a comment..." required></textarea>
+                    <button type="submit">Post Comment</button>
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 </html>
