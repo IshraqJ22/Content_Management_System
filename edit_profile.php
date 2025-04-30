@@ -25,6 +25,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone_no = $_POST['phone_no'];
     $bio = $_POST['bio'];
     $date_of_birth = DateTime::createFromFormat('Y-m-d', $_POST['date_of_birth'])->format('Y-m-d');
+    $newUsername = $_POST['username'];
+
+    // Check if the new username is already taken
+    if ($newUsername !== $username) {
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = ?");
+        $stmt->execute([$newUsername]);
+        if ($stmt->fetchColumn() > 0) {
+            echo "<p style='color:red;'>Username is already taken. Please choose a different one.</p>";
+            exit;
+        }
+    }
 
     // Handle profile picture upload
     $profilePicture = $user['profile_picture'];
@@ -38,8 +49,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Update user details
-    $stmt = $pdo->prepare("UPDATE users SET name = ?, email = ?, phone_no = ?, bio = ?, date_of_birth = ?, profile_picture = ? WHERE username = ?");
-    $stmt->execute([$name, $email, $phone_no, $bio, $date_of_birth, $profilePicture, $username]);
+    $stmt = $pdo->prepare("UPDATE users SET name = ?, email = ?, phone_no = ?, bio = ?, date_of_birth = ?, profile_picture = ?, username = ? WHERE username = ?");
+    $stmt->execute([$name, $email, $phone_no, $bio, $date_of_birth, $profilePicture, $newUsername, $username]);
+
+    // Update session username
+    $_SESSION['username'] = $newUsername;
 
     header("Location: user_profile.php");
     exit;
@@ -117,6 +131,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
