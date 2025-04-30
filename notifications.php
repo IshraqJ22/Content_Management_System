@@ -46,6 +46,14 @@ $stmt->execute([$userId]);
             display: flex;
         }
 
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+        }
+
         .sidebar {
             width: 250px;
             height: 100vh;
@@ -82,9 +90,9 @@ $stmt->execute([$userId]);
         }
 
         .sidebar .user-info img {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            border-radius: 0;
             object-fit: cover;
         }
 
@@ -114,9 +122,26 @@ $stmt->execute([$userId]);
         .sidebar .menu .icon {
             margin-right: 10px;
             width: 20px;
-            height: 20px;
+            height: 29px;
         }
 
+        .btn-primary {
+            padding: 5px 10px;
+            font-size: 16px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            border: 1px solid #E0E0E0;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            background-color: #e0e0e0;
+        }
         .main-content {
             margin-left: 250px;
             padding: 20px;
