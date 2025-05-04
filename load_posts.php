@@ -97,7 +97,7 @@ foreach ($posts as $post) {
             background-color: #000000; /* Changed to black */
             color:#ffffff; /* Changed to white */
             border: 1px solid #E0E0E0;
-            border-radius: 5px;
+            border-radius: 20px;
             cursor: pointer;">
                     <?php
                     // Check if the user has liked the post
@@ -119,7 +119,7 @@ foreach ($posts as $post) {
             background-color: #000000; /* Changed to black */
             color:#ffffff; /* Changed to white */
             border: 1px solid #E0E0E0;
-            border-radius: 5px;
+            border-radius: 20px;
             cursor: pointer;">Comment</button>
             </form>
         </div>
@@ -156,7 +156,7 @@ foreach ($posts as $post) {
             background-color: #000000; /* Changed to black */
             color:#ffffff; /* Changed to white */
             border: 1px solid #E0E0E0;
-            border-radius: 5px;
+            border-radius: 20px;
             cursor: pointer;">See More</a>
         </div>
         <?php if ($isAdmin): ?>

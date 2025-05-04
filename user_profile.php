@@ -253,7 +253,7 @@ $followingCount = $stmt->fetchColumn();
         background-color: #000000; /* Ensure buttons are black */
         color: #ffffff; /* Ensure text is white */
         border: 1px solid #ffffff; /* Ensure border is white */
-        border-radius: 5px;
+        border-radius: 20px;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -409,7 +409,7 @@ $followingCount = $stmt->fetchColumn();
             </a>
             <div class="search-container" id="search-container" style="display: none; margin-top: 10px; text-align: center;">
                 <input type="text" id="search-input" placeholder="Search for a username..." style="padding: 10px; font-size: 16px; border: 1px solid #ced4da; border-radius: 5px; width: 80%; margin-right: 10px;">
-                <button onclick="searchUser()" style="padding: 10px 20px; font-size: 16px; background-color: #ffffff; color: #000000; border: 1px solid #E0E0E0; border-radius: 5px; cursor: pointer;">Search</button>
+                <button onclick="searchUser()" style="padding: 10px 40px; font-size: 16px; background-color: #000000; color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 20px; cursor: pointer;">Search</button>
             </div>
             <a href="user_profile.php" class="active">
                 <div class="icon">
@@ -445,7 +445,7 @@ $followingCount = $stmt->fetchColumn();
             <?php if ($loggedInUserId != $user['user_id']): ?>
                 <form action="user_profile.php?username=<?php echo urlencode($username); ?>" method="POST" style="margin-top: 10px;">
                     <input type="hidden" name="follow_action" value="<?php echo $isFollowing ? 'unfollow' : 'follow'; ?>">
-                    <button type="submit" style="padding: 5px 10px; font-size: 14px; background-color: <?php echo $isFollowing ? '#ff4d4d' : '#6c63ff'; ?>; padding: 10px 20px; font-size: 16px; background-color: #000000; color: #ffffff; border: 1px solid #E0E0E0; border-radius: 5px; cursor: pointer;">
+                    <button type="submit" style="padding: 5px 10px; font-size: 14px; background-color: <?php echo $isFollowing ? '#ff4d4d' : '#6c63ff'; ?>; padding: 10px 20px; font-size: 16px; background-color: #000000; color: #ffffff; border: 1px solid #E0E0E0; border-radius: 20px; cursor: pointer;">
                         <?php echo $isFollowing ? 'Unfollow' : 'Follow'; ?>
                     </button>
                 </form>
@@ -483,17 +483,17 @@ $followingCount = $stmt->fetchColumn();
             background-color: #000000; /* Ensure buttons are black */
             color: #ffffff; /* Ensure text is white */
             border: 1px solid #E0E0E0;
-            border-radius: 5px;
+            border-radius: 20px;
             cursor: pointer;">Edit Profile</button>
             </a>
             <a href="create_post.php" style="text-decoration: none; margin-left: 10px;">
-                <button style="padding: 10px 20px; font-size: 14px; background-color: #000000; color: #ffffff; border: 1px solid #E0E0E0; border-radius: 5px; cursor: pointer;">Create Post</button>
+                <button style="padding: 10px 20px; font-size: 14px; background-color: #000000; color: #ffffff; border: 1px solid #E0E0E0; border-radius: 20px; cursor: pointer;">Create Post</button>
             </a>
         </div>
         <?php if ($loggedInUserId == $user['user_id']): ?>
             <form action="user_profile.php" method="POST" style="margin-top: 10px;" onsubmit="return confirm('Are you sure you want to delete your profile? This action cannot be undone.');">
                 <input type="hidden" name="remove_user" value="1">
-                <button type="submit" style="padding: 10px 20px; font-size: 16px; background-color: #ff4d4d; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                <button type="submit" style="padding: 10px 20px; font-size: 16px; background-color: #ff4d4d; color: white; border: none; border-radius: 20px; cursor: pointer;">
                     Delete Profile
                 </button>
             </form>
@@ -515,12 +515,12 @@ $followingCount = $stmt->fetchColumn();
                         <p style="font-size: 12px; color: #666;">Likes: <?php echo htmlspecialchars($post['like_count']); ?> | Comments: <?php echo htmlspecialchars($post['comment_count']); ?></p>
                         <div style="margin-top: 10px;">
                             <a href="view_post.php?blog_id=<?php echo $post['blog_id']; ?>" style="text-decoration: none;">
-                                <button style="padding: 10px 20px; font-size: 16px; background-color: #000000; color: #ffffff; border: 1px solid #E0E0E0; border-radius: 5px; cursor: pointer;">See More</button>
+                                <button style="padding: 10px 20px; font-size: 16px; background-color: #000000; color: #ffffff; border: 1px solid #E0E0E0; border-radius: 20px; cursor: pointer;">See More</button>
                             </a>
                         </div>
                         <form action="user_profile.php" method="POST" style="margin-top: 10px;">
                             <input type="hidden" name="blog_id" value="<?php echo $post['blog_id']; ?>">
-                            <button type="submit" name="delete_post" style="padding: 10px 20px; font-size: 16px; background-color: #ff4d4d; color: white; border: none; border-radius: 5px; cursor: pointer;">Delete Post</button>
+                            <button type="submit" name="delete_post" style="padding: 10px 20px; font-size: 16px; background-color: #ff4d4d; color: white; border: none; border-radius: 20px; cursor: pointer;">Delete Post</button>
                         </form>
                     </div>
                 <?php endforeach; ?>

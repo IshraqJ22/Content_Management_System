@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: #000000; /* Changed to black */
             color: #ffffff; /* Changed to white */
             border: 1px solid #e0e0e0;
-            border-radius: 5px;
+            border-radius: 20px;
             font-size: 16px;
             cursor: pointer;
         }
@@ -117,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border: 1px solid #e0e0e0;
             padding: 10px;
             font-size: 16px;
-            border-radius: 5px;
+            border-radius: 20px;
             cursor: pointer;
         }
 

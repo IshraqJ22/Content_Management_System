@@ -208,7 +208,7 @@ $unreadNotifications = $stmt->fetchColumn();
             background-color: #000000;
             color: #ffffff;
             border: 1px solid #E0E0E0;
-            border-radius: 5px;
+            border-radius: 20px;
             cursor: pointer;
         }
 
@@ -308,7 +308,7 @@ $unreadNotifications = $stmt->fetchColumn();
             background-color: #000000;
             color: #f9f9f9;
             border: 1px solid #E0E0E0;
-            border-radius: 5px;
+            border-radius: 20px;
             cursor: pointer;
         }
 
@@ -322,7 +322,7 @@ $unreadNotifications = $stmt->fetchColumn();
             background-color:#000000; /* Changed to black */
             color: #ffffff; /* Changed to white */
             border: 1px solid #E0E0E0;
-            border-radius: 5px;
+            border-radius: 20px;
             cursor: pointer;
             display: flex;
             align-items: center;
