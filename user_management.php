@@ -132,29 +132,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('Blog post deleted successfully.'); window.location.href = 'user_management.php';</script>";
     }
 
-    // Approve a comment
-    if (isset($_POST['approve_comment'])) {
-        $commentId = $_POST['comment_id'];
-        $adminUsername = $_SESSION['username'];
-
-        // Fetch the user_id of the admin
-        $stmt = $pdo->prepare("SELECT user_id FROM users WHERE username = ?");
-        $stmt->execute([$adminUsername]);
-        $admin = $stmt->fetch();
-
-        if ($admin) {
-            $adminId = $admin['user_id'];
-
-            // Update the comment to mark it as approved
-            $stmt = $pdo->prepare("UPDATE comments SET status = 'Approved', approved_by = ?, approved_at = NOW() WHERE comment_id = ?");
-            $stmt->execute([$adminId, $commentId]);
-
-            echo "<script>alert('Comment approved successfully.'); window.location.href = 'user_management.php';</script>";
-        } else {
-            echo "<script>alert('Failed to approve the comment. Admin not found.');</script>";
-        }
-    }
-
     // Delete a comment
     if (isset($_POST['delete_comment'])) {
         $commentId = $_POST['comment_id'];
@@ -536,7 +513,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <th>Commenter</th>
                     <th>Blog ID</th>
                     <th>Created At</th>
-                    <th>Approved By</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -548,11 +524,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <td><?php echo htmlspecialchars($comment['commenter_username']); ?></td>
                         <td><?php echo htmlspecialchars($comment['blog_id']); ?></td>
                         <td><?php echo htmlspecialchars($comment['created_at']); ?></td>
-                        <td><?php echo htmlspecialchars($comment['approved_by'] ?? 'N/A'); ?></td>
                         <td>
                             <form action="user_management.php" method="POST" style="display: inline;">
                                 <input type="hidden" name="comment_id" value="<?php echo $comment['comment_id']; ?>">
-                                <button type="submit" name="approve_comment" class="btn-success">Approve</button>
                                 <button type="submit" name="delete_comment" class="btn-danger">Delete</button>
                             </form>
                         </td>
