@@ -60,14 +60,16 @@ $unreadNotifications = $stmt->fetchColumn();
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            background-color: #000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
             display: flex;
         }
 
         .sidebar {
             width: 250px;
             height: 100vh;
-            background-color: #ffffff;
+            background-color: #000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 0;
@@ -116,17 +118,17 @@ $unreadNotifications = $stmt->fetchColumn();
             /* Ensure icons and text are vertically aligned */
             padding: 15px 20px;
             text-decoration: none;
-            color: #333;
+            color: #ffffff; /* Changed to white */
             font-size: 16px;
             transition: background-color 0.3s;
         }
 
         .sidebar .menu a:hover {
-            background-color: #f0f0f0;
+            background-color: #333333;
         }
 
         .sidebar .menu a.active {
-            background-color: #ffffff;
+            background-color: #000000;
             font-weight: bold;
         }
 
@@ -155,17 +157,17 @@ $unreadNotifications = $stmt->fetchColumn();
             align-items: center;
             padding: 15px 20px;
             text-decoration: none;
-            color: #333;
+            color: #f9f9f9; /* Changed to white */
             font-size: 16px;
             transition: background-color 0.3s;
         }
 
         .sidebar .menu a.user-management:hover {
-            background-color: #f0f0f0;
+            background-color: #333333;
         }
 
         .sidebar .menu a.user-management.active {
-            background-color: #ffffff;
+            background-color: #000000;
             font-weight: bold;
         }
 
@@ -180,7 +182,7 @@ $unreadNotifications = $stmt->fetchColumn();
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #ffffff;
+            background-color: #000000;
             padding: 10px 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
@@ -203,8 +205,8 @@ $unreadNotifications = $stmt->fetchColumn();
         .create-post button {
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
+            background-color: #000000;
+            color: #ffffff;
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;
@@ -217,7 +219,7 @@ $unreadNotifications = $stmt->fetchColumn();
         .content-banner {
             width: 100%;
             height: 200px;
-            background-color: rgb(255, 253, 253);
+            background-color:  #000000;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -227,8 +229,9 @@ $unreadNotifications = $stmt->fetchColumn();
         }
 
         .blog-post {
-            background-color: #ffffff;
-            border: 1px solid #e0e0e0;
+            background-color: #000000; /* Changed to black */
+            color:  #000000; /* Changed to white */
+            border: 1px solid #333333; /* Adjust border color */
             border-radius: 5px;
             padding: 20px;
             margin-bottom: 20px;
@@ -243,7 +246,7 @@ $unreadNotifications = $stmt->fetchColumn();
             /* Adjusted spacing */
             padding: 10px;
             /* Added padding for better spacing */
-            background-color: #f9f9f9;
+            background-color: #000000;
             /* Optional: Add a background color for clarity */
             border-bottom: 1px solid #e0e0e0;
             /* Optional: Add a separator */
@@ -302,8 +305,8 @@ $unreadNotifications = $stmt->fetchColumn();
         .search-container button {
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
+            background-color: #000000;
+            color: #f9f9f9;
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;
@@ -316,8 +319,8 @@ $unreadNotifications = $stmt->fetchColumn();
         .btn-primary {
             padding: 5px 10px;
             font-size: 16px;
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
+            background-color:#000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;
@@ -329,7 +332,7 @@ $unreadNotifications = $stmt->fetchColumn();
         }
 
         .btn-primary:hover {
-            background-color: #E0E0E0;
+            background-color: #333333; /* Adjusted hover color */
         }
 
         .btn-primary .icon {
@@ -337,6 +340,12 @@ $unreadNotifications = $stmt->fetchColumn();
             height: 20px;
             margin-bottom: 6px;
             ;
+        }
+
+        input, textarea {
+            background-color: #000000; /* Ensure inputs are black */
+            color: #ffffff; /* Ensure text is white */
+            border: 1px solid #ffffff; /* Ensure border is white */
         }
     </style>
     <script>
@@ -364,7 +373,7 @@ $unreadNotifications = $stmt->fetchColumn();
         <div class="user-info" style="display: flex; align-items: center; gap: 10px; padding: 10px;">
             <img src="<?php echo !empty($user['profile_picture']) ? 'uploads/' . htmlspecialchars($user['profile_picture']) : 'images/default_user.png'; ?>" alt="Profile Picture" style="width: 130px; height: 130px; object-fit: cover;">
             <div style="display: flex; flex-direction: column;">
-                <p style="margin: 0; font-weight: bold; color: black;"><?php echo htmlspecialchars($user['username']); ?></p>
+                <p style="color: #ffffff; font-weight: bold;"><?php echo htmlspecialchars($user['username']); ?></p>
                 <p style="margin: 0; font-size: 14px; color: #666;">User id: <?php echo htmlspecialchars($user['user_id']); ?></p>
             </div>
         </div>

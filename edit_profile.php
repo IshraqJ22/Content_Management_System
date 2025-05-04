@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="bootstrap.css">
     <style>
         body {
-            background-color: #ffffff;
+            background-color: #000000;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 20px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            background-color: #f9f9f9;
+            background-color: #000000;
         }
 
         .form-group {
@@ -111,15 +111,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .btn-primary {
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
+            background-color: #000000;
+            color: #ffffff;
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;
         }
 
         .btn-primary:hover {
-            background-color: #E0E0E0;
+            background-color: #333333;
         }
     </style>
 </head>

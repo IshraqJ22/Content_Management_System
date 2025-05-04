@@ -173,14 +173,16 @@ $followingCount = $stmt->fetchColumn();
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
-        background-color: #f9f9f9;
+        background-color: #000000; /* Ensure background is black */
+        color: #ffffff; /* Ensure text is white */
         display: flex;
     }
 
     .sidebar {
         width: 250px;
         height: 100vh;
-        background-color: #ffffff;
+        background-color: #000000; /* Ensure sidebar is black */
+        color: #ffffff; /* Ensure text is white */
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
         position: fixed;
         top: 0;
@@ -225,17 +227,17 @@ $followingCount = $stmt->fetchColumn();
         align-items: center;
         padding: 15px 20px;
         text-decoration: none;
-        color: #333;
+        color: #ffffff; /* Ensure text is white */
         font-size: 16px;
         transition: background-color 0.3s;
     }
 
     .sidebar .menu a:hover {
-        background-color: #f0f0f0;
+        background-color: #333333; /* Adjust hover color */
     }
 
     .sidebar .menu a.active {
-        background-color: #ffffff;
+        background-color: #000000; /* Ensure active background is black */
         font-weight: bold;
     }
 
@@ -248,9 +250,9 @@ $followingCount = $stmt->fetchColumn();
     .btn-primary {
         padding: 5px 10px;
         font-size: 16px;
-        background-color: #ffffff;
-        color: rgb(0, 0, 0);
-        border: 1px solid #E0E0E0;
+        background-color: #000000; /* Ensure buttons are black */
+        color: #ffffff; /* Ensure text is white */
+        border: 1px solid #ffffff; /* Ensure border is white */
         border-radius: 5px;
         cursor: pointer;
         display: flex;
@@ -260,7 +262,7 @@ $followingCount = $stmt->fetchColumn();
     }
 
     .btn-primary:hover {
-        background-color: #e0e0e0;
+        background-color: #333333; /* Adjust hover color */
     }
 
     .main-content {
@@ -295,7 +297,7 @@ $followingCount = $stmt->fetchColumn();
 
     .profile-header .profile-info p {
         margin: 5px 0;
-        color: #666;
+        color: #ffffff; /* Ensure text is white */
     }
 
     .bio-section {
@@ -309,7 +311,7 @@ $followingCount = $stmt->fetchColumn();
 
     .bio-section p {
         font-size: 16px;
-        color: #333;
+        color: #ffffff; /* Ensure text is white */
     }
 
     .posts-section {
@@ -319,8 +321,9 @@ $followingCount = $stmt->fetchColumn();
     }
 
     .post-card {
-        background-color: #ffffff;
-        border: 1px solid #e0e0e0;
+        background-color: #000000; /* Ensure posts are black */
+        color: #ffffff; /* Ensure text is white */
+        border: 1px solid #333333; /* Adjust border color */
         border-radius: 5px;
         width: calc(50% - 10px);
         padding: 20px;
@@ -340,7 +343,7 @@ $followingCount = $stmt->fetchColumn();
 
     .post-card p {
         font-size: 14px;
-        color: #666;
+        color: #ffffff; /* Ensure text is white */
     }
 
     .profile-stats {
@@ -359,7 +362,13 @@ $followingCount = $stmt->fetchColumn();
     .profile-stats div span {
         display: block;
         font-size: 14px;
-        color: #666;
+        color: #ffffff; /* Ensure text is white */
+    }
+
+    input, textarea {
+        background-color: #000000; /* Ensure inputs are black */
+        color: #ffffff; /* Ensure text is white */
+        border: 1px solid #ffffff; /* Ensure border is white */
     }
 </style>
 <script>
@@ -436,13 +445,7 @@ $followingCount = $stmt->fetchColumn();
             <?php if ($loggedInUserId != $user['user_id']): ?>
                 <form action="user_profile.php?username=<?php echo urlencode($username); ?>" method="POST" style="margin-top: 10px;">
                     <input type="hidden" name="follow_action" value="<?php echo $isFollowing ? 'unfollow' : 'follow'; ?>">
-                    <button type="submit" style="padding: 5px 10px; font-size: 14px; background-color: <?php echo $isFollowing ? '#ff4d4d' : '#6c63ff'; ?>;padding: 10px 20px;
-            font-size: 16px;
-            background-color: #ffffff;
-            color:rgb(0, 0, 0);
-            border: 1px solid #E0E0E0;
-            border-radius: 5px;
-            cursor: pointer;">
+                    <button type="submit" style="padding: 5px 10px; font-size: 14px; background-color: <?php echo $isFollowing ? '#ff4d4d' : '#6c63ff'; ?>; padding: 10px 20px; font-size: 16px; background-color: #000000; color: #ffffff; border: 1px solid #E0E0E0; border-radius: 5px; cursor: pointer;">
                         <?php echo $isFollowing ? 'Unfollow' : 'Follow'; ?>
                     </button>
                 </form>
@@ -477,14 +480,14 @@ $followingCount = $stmt->fetchColumn();
             <a href="edit_profile.php" style="text-decoration: none;">
                 <button style="padding: 10px 20px;
             font-size: 16px;
-            background-color: #ffffff;
-            color:rgb(0, 0, 0);
+            background-color: #000000; /* Ensure buttons are black */
+            color: #ffffff; /* Ensure text is white */
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;">Edit Profile</button>
             </a>
             <a href="create_post.php" style="text-decoration: none; margin-left: 10px;">
-                <button style="padding: 10px 20px; font-size: 14px; background-color: #ffffff; color:rgb(0, 0, 0); border: 1px solid #E0E0E0; border-radius: 5px; cursor: pointer;">Create Post</button>
+                <button style="padding: 10px 20px; font-size: 14px; background-color: #000000; color: #ffffff; border: 1px solid #E0E0E0; border-radius: 5px; cursor: pointer;">Create Post</button>
             </a>
         </div>
         <?php if ($loggedInUserId == $user['user_id']): ?>
@@ -503,12 +506,16 @@ $followingCount = $stmt->fetchColumn();
                     <div class="post-card">
                         <img src="<?php echo !empty($post['image_url']) ? 'uploads/' . htmlspecialchars($post['image_url']) : 'images/default_banner.png'; ?>" alt="Post Image">
                         <h3><?php echo htmlspecialchars($post['title']); ?></h3>
-                        <p><?php echo nl2br(htmlspecialchars($post['content'])); ?></p>
+                        <?php
+                        $contentLines = explode("\n", htmlspecialchars($post['content']));
+                        $previewContent = implode("\n", array_slice($contentLines, 0, 3)); // Get the first 3 lines
+                        ?>
+                        <p><?php echo nl2br($previewContent); ?></p>
                         <p style="font-size: 12px; color: #666;">Created on: <?php echo htmlspecialchars($post['created_at']); ?></p>
                         <p style="font-size: 12px; color: #666;">Likes: <?php echo htmlspecialchars($post['like_count']); ?> | Comments: <?php echo htmlspecialchars($post['comment_count']); ?></p>
                         <div style="margin-top: 10px;">
                             <a href="view_post.php?blog_id=<?php echo $post['blog_id']; ?>" style="text-decoration: none;">
-                                <button style="padding: 10px 20px; font-size: 16px; background-color: #ffffff; color:rgb(0, 0, 0); border: 1px solid #E0E0E0; border-radius: 5px; cursor: pointer;">See More</button>
+                                <button style="padding: 10px 20px; font-size: 16px; background-color: #000000; color: #ffffff; border: 1px solid #E0E0E0; border-radius: 5px; cursor: pointer;">See More</button>
                             </a>
                         </div>
                         <form action="user_profile.php" method="POST" style="margin-top: 10px;">

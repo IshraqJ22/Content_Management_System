@@ -63,14 +63,16 @@ if (!$user) {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            background-color: #000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
             display: flex;
         }
 
         .sidebar {
             width: 250px;
             height: 100vh;
-            background-color: #ffffff;
+            background-color: #000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 0;
@@ -118,17 +120,17 @@ if (!$user) {
             align-items: center;
             padding: 15px 20px;
             text-decoration: none;
-            color: #333;
+            color: #ffffff; /* Changed to white */
             font-size: 16px;
             transition: background-color 0.3s;
         }
 
         .sidebar .menu a:hover {
-            background-color: #f0f0f0;
+            background-color: #333333;
         }
 
         .sidebar .menu a.active {
-            background-color: #ffffff;
+            background-color: #000000;
             font-weight: bold;
         }
 
@@ -141,8 +143,8 @@ if (!$user) {
         .btn-primary {
             padding: 5px 10px;
             font-size: 16px;
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
+            background-color: #000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;
@@ -153,7 +155,7 @@ if (!$user) {
         }
 
         .btn-primary:hover {
-            background-color: #e0e0e0;
+            background-color: #333333; /* Adjusted hover color */
         }
 
         .main-content {
@@ -161,7 +163,7 @@ if (!$user) {
             padding: 20px;
             flex: 1;
             min-height: 100vh;
-            background-color: #ffffff;
+            background-color: #000000;
         }
 
         .profile-header {
@@ -182,7 +184,8 @@ if (!$user) {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #ffffff;
+            background-color: #000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
             border: 1px solid #ddd;
             border-radius: 5px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -223,8 +226,8 @@ if (!$user) {
         .comment-form button {
             padding: 10px 20px;
             font-size: 14px;
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
+            background-color: #000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;
@@ -265,6 +268,32 @@ if (!$user) {
                 padding: 10px;
             }
         }
+
+        body {
+            background-color: #000000; /* Ensure background is black */
+            color: #ffffff; /* Ensure text is white */
+        }
+        .sidebar {
+            background-color: #000000; /* Ensure sidebar is black */
+            color: #ffffff; /* Ensure text is white */
+        }
+        .container {
+            background-color: #000000; /* Ensure container is black */
+            color: #ffffff; /* Ensure text is white */
+            border: 1px solid #333333; /* Adjust border color */
+        }
+        .btn-primary {
+            background-color: #000000; /* Ensure buttons are black */
+            color: #ffffff; /* Ensure text is white */
+        }
+        .btn-primary:hover {
+            background-color: #333333; /* Adjust hover color */
+        }
+        input, textarea {
+            background-color: #000000; /* Ensure inputs are black */
+            color: #ffffff; /* Ensure text is white */
+            border: 1px solid #ffffff; /* Ensure border is white */
+        }
     </style>
 </head>
 
@@ -275,7 +304,7 @@ if (!$user) {
         </div>
         <div class="user-info">
             <img src="<?php echo !empty($user['profile_picture']) ? 'uploads/' . htmlspecialchars($user['profile_picture']) : 'images/default_user.png'; ?>" alt="Profile Picture">
-            <p><?php echo htmlspecialchars($user['username']); ?></p>
+            <p style="color: #ffffff; font-weight: bold;"><?php echo htmlspecialchars($user['username']); ?></p>
         </div>
         <div class="menu">
             <a href="landing_page.php">
@@ -328,28 +357,31 @@ if (!$user) {
             <hr>
             <div class="comment-section">
                 <h2>Comments</h2>
-                <?php foreach ($comments as $comment): ?>
-                    <p>
-                        <strong>
-                            <a href="user_profile.php?username=<?php echo urlencode($comment['commenter_username']); ?>">
-                                <?php echo htmlspecialchars($comment['commenter_username']); ?>
-                            </a>:
-                        </strong>
-                        <?php echo htmlspecialchars($comment['content']); ?>
-                        <span>(<?php echo htmlspecialchars($comment['created_at']); ?>)</span>
-                        <?php if ($user['user_id'] == $post['user_id'] || $user['username'] == $comment['commenter_username'] || $user['is_admin'] == 1): ?>
-                    <form action="delete_comment.php" method="POST" style="display: inline;">
-                        <input type="hidden" name="comment_id" value="<?php echo $comment['comment_id']; ?>">
-                        <button type="submit" class="delete-button">Delete</button>
+                <div style="margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px;">
+                    <h4 style="color: #ffffff;">Comments:</h4>
+                    <?php foreach ($comments as $comment): ?>
+                        <p>
+                            <strong>
+                                <a href="user_profile.php?username=<?php echo urlencode($comment['commenter_username']); ?>" style="text-decoration: none; color: #ffffff;">
+                                    <?php echo htmlspecialchars($comment['commenter_username']); ?>
+                                </a>:
+                            </strong>
+                            <span style="color: #ffffff;"><?php echo htmlspecialchars($comment['content']); ?></span>
+                            <span style="font-size: 12px; color: #cccccc;">(<?php echo htmlspecialchars($comment['created_at']); ?>)</span>
+                            <?php if ($user['user_id'] == $post['user_id'] || $user['username'] == $comment['commenter_username'] || $user['is_admin'] == 1): ?>
+                                <form action="delete_comment.php" method="POST" style="display: inline;">
+                                    <input type="hidden" name="comment_id" value="<?php echo $comment['comment_id']; ?>">
+                                    <button type="submit" class="delete-button">Delete</button>
+                                </form>
+                            <?php endif; ?>
+                        </p>
+                    <?php endforeach; ?>
+                    <form action="comment_post.php" method="POST" class="comment-form">
+                        <input type="hidden" name="blog_id" value="<?php echo $blogId; ?>">
+                        <textarea name="comment" rows="3" placeholder="Write a comment..." required></textarea>
+                        <button type="submit">Post Comment</button>
                     </form>
-                <?php endif; ?>
-                </p>
-            <?php endforeach; ?>
-            <form action="comment_post.php" method="POST" class="comment-form">
-                <input type="hidden" name="blog_id" value="<?php echo $blogId; ?>">
-                <textarea name="comment" rows="3" placeholder="Write a comment..." required></textarea>
-                <button type="submit">Post Comment</button>
-            </form>
+                </div>
             </div>
         </div>
     </div>

@@ -156,14 +156,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            background-color: #ffffff;
             display: flex;
         }
 
         .sidebar {
             width: 250px;
             height: 100vh;
-            background-color: #ffffff;
+            color: #ffffff; /* Ensure text is white */
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 0;
@@ -209,20 +209,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .sidebar .menu a {
             display: flex;
             align-items: center;
-            /* Ensure icons and text are vertically aligned */
             padding: 15px 20px;
             text-decoration: none;
-            color: #333;
+            color: #ffffff; /* Changed to white */
             font-size: 16px;
             transition: background-color 0.3s;
         }
 
         .sidebar .menu a:hover {
-            background-color: #f0f0f0;
+            background-color: #333333;
         }
 
         .sidebar .menu a.active {
-            background-color: #ffffff;
+            background-color: #000000;
             font-weight: bold;
         }
 
@@ -251,17 +250,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             align-items: center;
             padding: 15px 20px;
             text-decoration: none;
-            color: #333;
+            color: #ffffff;
             font-size: 16px;
             transition: background-color 0.3s;
         }
 
         .sidebar .menu a.user-management:hover {
-            background-color: #f0f0f0;
+            background-color: #333333;
         }
 
         .sidebar .menu a.user-management.active {
-            background-color: #ffffff;
+            background-color: #000000;
             font-weight: bold;
         }
 
@@ -283,22 +282,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .search-container button {
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
+            background-color: #000000;
+            color: #ffffff;
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;
         }
 
         .search-container button:hover {
-            background-color: #E0E0E0;
+            background-color: #333333;
         }
 
         .container {
             max-width: 1200px;
             margin: 50px auto;
             padding: 20px;
-            background-color: #ffffff;
+            background-color: #000000;
             border: 1px solid #ddd;
             border-radius: 5px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -323,7 +322,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         table th {
-            background-color: #f3f3f3;
+            background-color: #000000;
         }
 
         .btn-danger {
@@ -365,6 +364,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 /* Remove margin for mobile view */
                 padding: 10px;
             }
+        }
+
+        body {
+            background-color: #000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
+        }
+        .sidebar {
+            background-color: #000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
+        }
+        .container {
+            background-color: #000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
+        }
+        .btn-danger, .btn-success {
+            background-color: #000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
+        }
+        .btn-danger:hover, .btn-success:hover {
+            background-color: #333333; /* Adjusted hover color */
         }
     </style>
     <script>

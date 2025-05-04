@@ -69,7 +69,7 @@ foreach ($posts as $post) {
             <div class="user-info" style="display: flex; align-items: center; gap: 10px;">
                 <img src="<?php echo !empty($post['profile_picture']) && file_exists('uploads/' . $post['profile_picture']) ? 'uploads/' . htmlspecialchars($post['profile_picture']) : 'images/default_user.png'; ?>" alt="User Profile Picture" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
                 <div>
-                    <a href="user_profile.php?username=<?php echo urlencode($post['author_username']); ?>" style="text-decoration: none; color: Black;">
+                    <a href="user_profile.php?username=<?php echo urlencode($post['author_username']); ?>" style="text-decoration: none; color: #ffffff;">
                         <p class="username" style="margin: 0; font-size: 14px; font-weight: bold;"><?php echo htmlspecialchars($post['author_username']); ?></p>
                     </a>
                     <p style="margin: 0; font-size: 12px; color: #666;"><?php echo htmlspecialchars($post['title']); ?></p>
@@ -83,15 +83,19 @@ foreach ($posts as $post) {
             </div>
         </div>
         <div class="post-content" style="padding: 15px; font-size: 14px; line-height: 1.6; color: #555;">
-            <p><?php echo nl2br(htmlspecialchars($post['content'])); ?></p>
+            <?php
+            $contentLines = explode("\n", htmlspecialchars($post['content']));
+            $previewContent = implode("\n", array_slice($contentLines, 0, 3)); // Get the first 3 lines
+            ?>
+            <p><?php echo nl2br($previewContent); ?></p>
         </div>
         <div style="margin-top: 10px;">
             <form action="like_post.php" method="POST" style="display: inline;">
                 <input type="hidden" name="blog_id" value="<?php echo $post['blog_id']; ?>">
                 <button type="submit" style="padding: 10px 20px;
             font-size: 16px;
-            background-color: #ffffff;
-            color:rgb(0, 0, 0);
+            background-color: #000000; /* Changed to black */
+            color:#ffffff; /* Changed to white */
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;">
@@ -112,8 +116,8 @@ foreach ($posts as $post) {
                 <textarea name="comment" rows="2" placeholder="Write a comment..." style="width: 100%; padding: 5px; margin-bottom: 5px;" required></textarea>
                 <button type="submit" style="padding: 10px 20px;
             font-size: 16px;
-            background-color: #ffffff;
-            color:rgb(0, 0, 0);
+            background-color: #000000; /* Changed to black */
+            color:#ffffff; /* Changed to white */
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;">Comment</button>
@@ -121,7 +125,7 @@ foreach ($posts as $post) {
         </div>
         <!-- Display comments -->
         <div style="margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px;">
-            <h4>Comments:</h4>
+            <h4 style="color: #ffffff;">Comments:</h4>
             <?php
             $commentStmt = $pdo->prepare("
                 SELECT comments.content, comments.created_at, users.username AS commenter_username 
@@ -134,14 +138,23 @@ foreach ($posts as $post) {
             $commentStmt->execute([$post['blog_id']]);
             $comments = $commentStmt->fetchAll(PDO::FETCH_ASSOC);
             foreach ($comments as $comment) {
-                echo "<p><strong><a href='user_profile.php?username=" . urlencode($comment['commenter_username']) . "' style='text-decoration: none; color: black;'>" . htmlspecialchars($comment['commenter_username']) . "</a>:</strong> " . htmlspecialchars($comment['content']) .
-                    " <span style='font-size: 12px; color: #666;'>(" . htmlspecialchars($comment['created_at']) . ")</span></p>";
+            ?>
+                <p>
+                    <strong>
+                        <a href="user_profile.php?username=<?php echo urlencode($comment['commenter_username']); ?>" style="text-decoration: none; color: #ffffff;">
+                            <?php echo htmlspecialchars($comment['commenter_username']); ?>
+                        </a>:
+                    </strong>
+                    <span style="color: #ffffff;"><?php echo htmlspecialchars($comment['content']); ?></span>
+                    <span style="font-size: 12px; color: #cccccc;">(<?php echo htmlspecialchars($comment['created_at']); ?>)</span>
+                </p>
+            <?php
             }
             ?>
             <a href="view_post.php?blog_id=<?php echo $post['blog_id']; ?>" style="padding: 10px 20px;
             font-size: 16px;
-            background-color: #ffffff;
-            color:rgb(0, 0, 0);
+            background-color: #000000; /* Changed to black */
+            color:#ffffff; /* Changed to white */
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;">See More</a>

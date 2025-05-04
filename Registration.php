@@ -56,7 +56,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="bootstrap.css">
     <style>
         body {
-            background-color: #ffffff;
+            background-color: #000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
@@ -75,6 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             max-width: 400px;
             width: 100%;
             text-align: center;
+            background-color: #000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
         }
 
         .registration-container h1 {
@@ -114,8 +117,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .btn-primary {
-            background-color: #f3e8ff;
-            color: #6c63ff;
+            background-color: #000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
             border: none;
             padding: 10px 20px;
             font-size: 16px;
@@ -125,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .btn-primary:hover {
-            background-color: #e0d8ff;
+            background-color: #333333; /* Adjusted hover color */
         }
     </style>
 </head>

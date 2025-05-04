@@ -37,7 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="bootstrap.css">
     <style>
         body {
-            background-color: #f9f9f9;
+            background-color: #000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
@@ -49,7 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .login-container {
             width: 100%;
             max-width: 400px;
-            background-color: #ffffff;
+            background-color: #000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -79,8 +81,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .login-container button {
             width: 100%;
             padding: 10px;
-            background-color: #ffffff;
-            color:rgb(0, 0, 0);
+            background-color: #000000; /* Changed to black */
+            color: #ffffff; /* Changed to white */
             border: 1px solid #e0e0e0;
             border-radius: 5px;
             font-size: 16px;
@@ -88,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .login-container button:hover {
-            background-color: #e0e0e0;
+            background-color: #333333; /* Adjusted hover color */
         }
 
         .login-container .divider {

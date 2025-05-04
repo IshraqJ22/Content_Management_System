@@ -6,15 +6,27 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    background-color: #000000; /* Ensure background is black */
+    color: #ffffff; /* Ensure text is white */
+}
+
+a {
+    color: #ffffff; /* Ensure links are white */
+    text-decoration: none; /* Remove underline */
+}
+
+a:hover {
+    color: #cccccc; /* Adjust hover color */
+    text-decoration: underline; /* Add underline on hover */
 }
 
 /* Sidebar */
 .sidebar {
     width: 250px;
     height: 100vh;
-    background-color: #ffffff;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    background-color: #000000; /* Ensure sidebar is black */
+    color: #ffffff; /* Ensure text is white */
+    box-shadow: 2px 0 5px rgba(255, 255, 255, 0.1); /* Adjusted shadow for inverted colors */
     position: fixed;
     top: 0;
     left: 0;
@@ -37,17 +49,17 @@ body {
     align-items: center;
     padding: 15px 20px;
     text-decoration: none;
-    color: #333;
+    color: #ffffff; /* Changed to white */
     font-size: 16px;
     transition: background-color 0.3s;
 }
 
 .sidebar .menu a:hover {
-    background-color: #f0f0f0;
+    background-color: #333333; /* Adjusted hover color */
 }
 
 .sidebar .menu a.active {
-    background-color: #ffffff;
+    background-color: #000000; /* Changed to black */
     font-weight: bold;
 }
 
@@ -62,6 +74,35 @@ body {
     margin-left: 250px;
     padding: 20px;
     flex: 1;
+    background-color: #000000; /* Changed to black */
+    color: #ffffff; /* Changed to white */
+}
+
+/* Buttons */
+button, .btn-primary {
+    background-color: #000000; /* Ensure buttons are black */
+    color: #ffffff; /* Ensure text is white */
+    border: 1px solid #ffffff; /* Ensure border is white */
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover, .btn-primary:hover {
+    background-color: #333333; /* Adjust hover color */
+}
+
+/* Post Content */
+.blog-post {
+    background-color: #000000; /* Ensure posts are black */
+    color: #ffffff; /* Ensure text is white */
+    border: 1px solid #333333; /* Adjust border color */
+}
+
+/* Inputs and Textareas */
+input, textarea {
+    background-color: #000000; /* Ensure inputs are black */
+    color: #ffffff; /* Ensure text is white */
+    border: 1px solid #ffffff; /* Ensure border is white */
 }
 
 /* Responsive Design */

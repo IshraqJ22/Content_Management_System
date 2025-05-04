@@ -42,7 +42,7 @@ $stmt->execute([$userId]);
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            background-color: #000000;
             display: flex;
         }
 
@@ -50,14 +50,14 @@ $stmt->execute([$userId]);
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            background-color: #000000;
             display: flex;
         }
 
         .sidebar {
             width: 250px;
             height: 100vh;
-            background-color: #ffffff;
+            background-color: #000000;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 0;
@@ -82,6 +82,7 @@ $stmt->execute([$userId]);
             border-radius: 0;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+        
 
         .sidebar .user-info {
             text-align: center;
@@ -105,17 +106,18 @@ $stmt->execute([$userId]);
             align-items: center;
             padding: 15px 20px;
             text-decoration: none;
-            color: #333;
+            color: #ffffff; /* Changed to white */
             font-size: 16px;
             transition: background-color 0.3s;
         }
 
+
         .sidebar .menu a:hover {
-            background-color: #f0f0f0;
+            background-color: #333333;
         }
 
         .sidebar .menu a.active {
-            background-color: #ffffff;
+            background-color: #000000;
             font-weight: bold;
         }
 
@@ -128,8 +130,8 @@ $stmt->execute([$userId]);
         .btn-primary {
             padding: 5px 10px;
             font-size: 16px;
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
+            background-color: #000000;
+            color: #ffffff;
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;
@@ -140,7 +142,7 @@ $stmt->execute([$userId]);
         }
 
         .btn-primary:hover {
-            background-color: #e0e0e0;
+            background-color: #333333;
         }
 
         .main-content {
@@ -153,7 +155,7 @@ $stmt->execute([$userId]);
             max-width: 800px;
             margin: 50px auto;
             padding: 20px;
-            background-color: #ffffff;
+            background-color: #000000;
             border: 1px solid #ddd;
             border-radius: 5px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -192,7 +194,7 @@ $stmt->execute([$userId]);
         </div>
         <div class="user-info">
             <img src="<?php echo !empty($user['profile_picture']) ? 'uploads/' . htmlspecialchars($user['profile_picture']) : 'images/default_user.png'; ?>" alt="Profile Picture">
-            <p style="margin: 0; font-weight: bold; color: black;"><?php echo htmlspecialchars($user['username']); ?></p>
+            <p style="color: #ffffff; font-weight: bold;"><?php echo htmlspecialchars($user['username']); ?></p>
         </div>
         <div class="menu">
             <a href="landing_page.php">
