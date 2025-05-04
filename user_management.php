@@ -235,11 +235,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 0px;
             ;
         }
+
         .sidebar .menu .user-management-icon {
-            width: 25px; /* Adjusted size for the user management icon */
+            width: 25px;
+            /* Adjusted size for the user management icon */
             height: 25px;
-            margin-bottom: 0; /* Ensure proper alignment */
-            border-radius: 0; /* No border radius for this specific icon */
+            margin-bottom: 0;
+            /* Ensure proper alignment */
+            border-radius: 0;
+            /* No border radius for this specific icon */
         }
 
         .sidebar .menu a.user-management {
@@ -260,6 +264,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: #ffffff;
             font-weight: bold;
         }
+
         .search-container {
             display: none;
             margin-top: 10px;
@@ -279,7 +284,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 10px 20px;
             font-size: 16px;
             background-color: #ffffff;
-            color:rgb(0, 0, 0);
+            color: rgb(0, 0, 0);
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;
@@ -288,6 +293,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .search-container button:hover {
             background-color: #E0E0E0;
         }
+
         .container {
             max-width: 1200px;
             margin: 50px auto;
@@ -309,7 +315,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-bottom: 30px;
         }
 
-        table th, table td {
+        table th,
+        table td {
             padding: 10px;
             text-align: left;
             border: 1px solid #ddd;
@@ -346,19 +353,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .main-content {
-            margin-left: 250px; /* Ensure the main content is spaced from the sidebar */
+            margin-left: 250px;
+            /* Ensure the main content is spaced from the sidebar */
             padding: 20px;
             flex: 1;
         }
 
         @media (max-width: 768px) {
             .main-content {
-                margin-left: 0; /* Remove margin for mobile view */
+                margin-left: 0;
+                /* Remove margin for mobile view */
                 padding: 10px;
             }
         }
     </style>
-     <script>
+    <script>
         function toggleSearch() {
             const searchContainer = document.getElementById('search-container');
             searchContainer.style.display = searchContainer.style.display === 'none' ? 'block' : 'none';
@@ -376,11 +385,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-<div class="sidebar">
+    <div class="sidebar">
         <div class="logo-container">
             <img src="images/BLOGr_logo.png" alt="BLOGr Logo">
         </div>
-       
+
         <div class="menu">
             <a href="landing_page.php" class="active">
                 <div class="icon">
@@ -395,9 +404,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 Search
             </a>
             <div class="search-container" id="search-container">
-            <input type="text" id="search-input" placeholder="Search for a username...">
-            <button onclick="searchUser()">Search</button>
-        </div>
+                <input type="text" id="search-input" placeholder="Search for a username...">
+                <button onclick="searchUser()">Search</button>
+            </div>
             <a href="user_profile.php">
                 <div class="icon">
                     <img src="images/user.png" alt="Profile Icon">
@@ -428,7 +437,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </button>
         </form>
     </div>
-    
+
     <div class="main-content">
         <h1>User Management</h1>
         <div class="search-container" id="search-container" style="margin-bottom: 20px;">

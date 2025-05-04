@@ -142,6 +142,7 @@ $stmt->execute([$userId]);
         .btn-primary:hover {
             background-color: #e0e0e0;
         }
+
         .main-content {
             margin-left: 250px;
             padding: 20px;

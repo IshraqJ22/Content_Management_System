@@ -47,11 +47,12 @@ if (!$user) {
     echo "<p style='color:red;'>User not found.</p>";
     exit;
 }
- 
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -162,6 +163,7 @@ if (!$user) {
             min-height: 100vh;
             background-color: #ffffff;
         }
+
         .profile-header {
             display: flex;
             align-items: center;
@@ -222,7 +224,7 @@ if (!$user) {
             padding: 10px 20px;
             font-size: 14px;
             background-color: #ffffff;
-            color:rgb(0, 0, 0);
+            color: rgb(0, 0, 0);
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;
@@ -265,6 +267,7 @@ if (!$user) {
         }
     </style>
 </head>
+
 <body>
     <div class="sidebar">
         <div class="logo-container">
@@ -331,24 +334,25 @@ if (!$user) {
                             <a href="user_profile.php?username=<?php echo urlencode($comment['commenter_username']); ?>">
                                 <?php echo htmlspecialchars($comment['commenter_username']); ?>
                             </a>:
-                        </strong> 
-                        <?php echo htmlspecialchars($comment['content']); ?> 
+                        </strong>
+                        <?php echo htmlspecialchars($comment['content']); ?>
                         <span>(<?php echo htmlspecialchars($comment['created_at']); ?>)</span>
                         <?php if ($user['user_id'] == $post['user_id'] || $user['username'] == $comment['commenter_username'] || $user['is_admin'] == 1): ?>
-                            <form action="delete_comment.php" method="POST" style="display: inline;">
-                                <input type="hidden" name="comment_id" value="<?php echo $comment['comment_id']; ?>">
-                                <button type="submit" class="delete-button">Delete</button>
-                            </form>
-                        <?php endif; ?>
-                    </p>
-                <?php endforeach; ?>
-                <form action="comment_post.php" method="POST" class="comment-form">
-                    <input type="hidden" name="blog_id" value="<?php echo $blogId; ?>">
-                    <textarea name="comment" rows="3" placeholder="Write a comment..." required></textarea>
-                    <button type="submit">Post Comment</button>
-                </form>
+                    <form action="delete_comment.php" method="POST" style="display: inline;">
+                        <input type="hidden" name="comment_id" value="<?php echo $comment['comment_id']; ?>">
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                <?php endif; ?>
+                </p>
+            <?php endforeach; ?>
+            <form action="comment_post.php" method="POST" class="comment-form">
+                <input type="hidden" name="blog_id" value="<?php echo $blogId; ?>">
+                <textarea name="comment" rows="3" placeholder="Write a comment..." required></textarea>
+                <button type="submit">Post Comment</button>
+            </form>
             </div>
         </div>
     </div>
 </body>
+
 </html>

@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 10px 20px;
             font-size: 16px;
             background-color: #ffffff;
-            color:rgb(0, 0, 0);
+            color: rgb(0, 0, 0);
             border: 1px solid #E0E0E0;
             border-radius: 5px;
             cursor: pointer;

@@ -36,4 +36,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['blog_id'], $_POST['com
     header("Location: view_post.php?blog_id=$blogId");
     exit;
 }
-?>
