@@ -82,7 +82,7 @@ foreach ($posts as $post) {
                 <p style="margin: 0;">Create date: <?php echo htmlspecialchars($post['created_at']); ?></p>
             </div>
         </div>
-        <div class="post-content" style="padding: 15px; font-size: 14px; line-height: 1.6; color: #555;">
+        <div class="post-content" style="padding: 15px; font-size: 14px; line-height: 1.6; color: #ffffff;">
             <?php
             $contentLines = explode("\n", htmlspecialchars($post['content']));
             $previewContent = implode("\n", array_slice($contentLines, 0, 3)); // Get the first 3 lines
