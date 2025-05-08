@@ -174,7 +174,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .sidebar {
             width: 250px;
             height: 100vh;
-            color: #ffffff; /* Ensure text is white */
+            color: #ffffff;
+            /* Ensure text is white */
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 0;
@@ -222,7 +223,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             align-items: center;
             padding: 15px 20px;
             text-decoration: none;
-            color: #ffffff; /* Changed to white */
+            color: #ffffff;
+            /* Changed to white */
             font-size: 16px;
             transition: background-color 0.3s;
         }
@@ -378,23 +380,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         body {
-            background-color: #000000; /* Changed to black */
-            color: #ffffff; /* Changed to white */
+            background-color: #000000;
+            /* Changed to black */
+            color: #ffffff;
+            /* Changed to white */
         }
+
         .sidebar {
-            background-color: #000000; /* Changed to black */
-            color: #ffffff; /* Changed to white */
+            background-color: #000000;
+            /* Changed to black */
+            color: #ffffff;
+            /* Changed to white */
         }
+
         .container {
-            background-color: #000000; /* Changed to black */
-            color: #ffffff; /* Changed to white */
+            background-color: #000000;
+            /* Changed to black */
+            color: #ffffff;
+            /* Changed to white */
         }
-        .btn-danger, .btn-success {
-            background-color: #000000; /* Changed to black */
-            color: #ffffff; /* Changed to white */
+
+        .btn-danger,
+        .btn-success {
+            background-color: #000000;
+            /* Changed to black */
+            color: #ffffff;
+            /* Changed to white */
         }
-        .btn-danger:hover, .btn-success:hover {
-            background-color: #333333; /* Adjusted hover color */
+
+        .btn-danger:hover,
+        .btn-success:hover {
+            background-color: #333333;
+            /* Adjusted hover color */
         }
     </style>
     <script>

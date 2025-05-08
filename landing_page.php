@@ -61,16 +61,20 @@ $unreadNotifications = $stmt->fetchColumn();
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #000000; /* Changed to black */
-            color: #ffffff; /* Changed to white */
+            background-color: #000000;
+            /* Changed to black */
+            color: #ffffff;
+            /* Changed to white */
             display: flex;
         }
 
         .sidebar {
             width: 250px;
             height: 100vh;
-            background-color: #000000; /* Changed to black */
-            color: #ffffff; /* Changed to white */
+            background-color: #000000;
+            /* Changed to black */
+            color: #ffffff;
+            /* Changed to white */
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 0;
@@ -119,7 +123,8 @@ $unreadNotifications = $stmt->fetchColumn();
             /* Ensure icons and text are vertically aligned */
             padding: 15px 20px;
             text-decoration: none;
-            color: #ffffff; /* Changed to white */
+            color: #ffffff;
+            /* Changed to white */
             font-size: 16px;
             transition: background-color 0.3s;
         }
@@ -158,7 +163,8 @@ $unreadNotifications = $stmt->fetchColumn();
             align-items: center;
             padding: 15px 20px;
             text-decoration: none;
-            color: #f9f9f9; /* Changed to white */
+            color: #f9f9f9;
+            /* Changed to white */
             font-size: 16px;
             transition: background-color 0.3s;
         }
@@ -220,7 +226,7 @@ $unreadNotifications = $stmt->fetchColumn();
         .content-banner {
             width: 100%;
             height: 200px;
-            background-color:  #000000;
+            background-color: #000000;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -230,9 +236,12 @@ $unreadNotifications = $stmt->fetchColumn();
         }
 
         .blog-post {
-            background-color: #000000; /* Changed to black */
-            color:  #000000; /* Changed to white */
-            border: 1px solid #333333; /* Adjust border color */
+            background-color: #000000;
+            /* Changed to black */
+            color: #000000;
+            /* Changed to white */
+            border: 1px solid #333333;
+            /* Adjust border color */
             border-radius: 5px;
             padding: 20px;
             margin-bottom: 20px;
@@ -320,8 +329,10 @@ $unreadNotifications = $stmt->fetchColumn();
         .btn-primary {
             padding: 5px 10px;
             font-size: 16px;
-            background-color:#000000; /* Changed to black */
-            color: #ffffff; /* Changed to white */
+            background-color: #000000;
+            /* Changed to black */
+            color: #ffffff;
+            /* Changed to white */
             border: 1px solid #E0E0E0;
             border-radius: 20px;
             cursor: pointer;
@@ -333,7 +344,8 @@ $unreadNotifications = $stmt->fetchColumn();
         }
 
         .btn-primary:hover {
-            background-color: #333333; /* Adjusted hover color */
+            background-color: #333333;
+            /* Adjusted hover color */
         }
 
         .btn-primary .icon {
@@ -343,10 +355,14 @@ $unreadNotifications = $stmt->fetchColumn();
             ;
         }
 
-        input, textarea {
-            background-color: #000000; /* Ensure inputs are black */
-            color: #ffffff; /* Ensure text is white */
-            border: 1px solid #ffffff; /* Ensure border is white */
+        input,
+        textarea {
+            background-color: #000000;
+            /* Ensure inputs are black */
+            color: #ffffff;
+            /* Ensure text is white */
+            border: 1px solid #ffffff;
+            /* Ensure border is white */
         }
     </style>
     <script>

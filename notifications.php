@@ -83,7 +83,7 @@ $stmt->execute([$userId]);
             border-radius: 0;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
+
 
         .sidebar .user-info {
             text-align: center;
@@ -107,7 +107,8 @@ $stmt->execute([$userId]);
             align-items: center;
             padding: 15px 20px;
             text-decoration: none;
-            color: #ffffff; /* Changed to white */
+            color: #ffffff;
+            /* Changed to white */
             font-size: 16px;
             transition: background-color 0.3s;
         }

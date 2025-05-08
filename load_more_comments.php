@@ -22,4 +22,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['blog_id'])) {
 
     echo '<a href="landing_page.php" style="color: blue; text-decoration: none;">Back to Posts</a>';
 }
-?>

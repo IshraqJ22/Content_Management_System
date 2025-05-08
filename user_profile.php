@@ -162,6 +162,7 @@ $followingCount = $stmt->fetchColumn();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -174,16 +175,20 @@ $followingCount = $stmt->fetchColumn();
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #000000; /* Ensure background is black */
-            color: #ffffff; /* Ensure text is white */
+            background-color: #000000;
+            /* Ensure background is black */
+            color: #ffffff;
+            /* Ensure text is white */
             display: flex;
         }
 
         .sidebar {
             width: 250px;
             height: 100vh;
-            background-color: #000000; /* Ensure sidebar is black */
-            color: #ffffff; /* Ensure text is white */
+            background-color: #000000;
+            /* Ensure sidebar is black */
+            color: #ffffff;
+            /* Ensure text is white */
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 0;
@@ -228,17 +233,20 @@ $followingCount = $stmt->fetchColumn();
             align-items: center;
             padding: 15px 20px;
             text-decoration: none;
-            color: #ffffff; /* Ensure text is white */
+            color: #ffffff;
+            /* Ensure text is white */
             font-size: 16px;
             transition: background-color 0.3s;
         }
 
         .sidebar .menu a:hover {
-            background-color: #333333; /* Adjust hover color */
+            background-color: #333333;
+            /* Adjust hover color */
         }
 
         .sidebar .menu a.active {
-            background-color: #000000; /* Ensure active background is black */
+            background-color: #000000;
+            /* Ensure active background is black */
             font-weight: bold;
         }
 
@@ -251,9 +259,12 @@ $followingCount = $stmt->fetchColumn();
         .btn-primary {
             padding: 5px 10px;
             font-size: 16px;
-            background-color: #000000; /* Ensure buttons are black */
-            color: #ffffff; /* Ensure text is white */
-            border: 1px solid #ffffff; /* Ensure border is white */
+            background-color: #000000;
+            /* Ensure buttons are black */
+            color: #ffffff;
+            /* Ensure text is white */
+            border: 1px solid #ffffff;
+            /* Ensure border is white */
             border-radius: 20px;
             cursor: pointer;
             display: flex;
@@ -263,7 +274,8 @@ $followingCount = $stmt->fetchColumn();
         }
 
         .btn-primary:hover {
-            background-color: #333333; /* Adjust hover color */
+            background-color: #333333;
+            /* Adjust hover color */
         }
 
         .main-content {
@@ -298,7 +310,8 @@ $followingCount = $stmt->fetchColumn();
 
         .profile-header .profile-info p {
             margin: 5px 0;
-            color: #ffffff; /* Ensure text is white */
+            color: #ffffff;
+            /* Ensure text is white */
         }
 
         .bio-section {
@@ -312,7 +325,8 @@ $followingCount = $stmt->fetchColumn();
 
         .bio-section p {
             font-size: 16px;
-            color: #ffffff; /* Ensure text is white */
+            color: #ffffff;
+            /* Ensure text is white */
         }
 
         .posts-section {
@@ -322,9 +336,12 @@ $followingCount = $stmt->fetchColumn();
         }
 
         .post-card {
-            background-color: #000000; /* Ensure posts are black */
-            color: #ffffff; /* Ensure text is white */
-            border: 1px solid #333333; /* Adjust border color */
+            background-color: #000000;
+            /* Ensure posts are black */
+            color: #ffffff;
+            /* Ensure text is white */
+            border: 1px solid #333333;
+            /* Adjust border color */
             border-radius: 5px;
             width: calc(50% - 10px);
             padding: 20px;
@@ -344,7 +361,8 @@ $followingCount = $stmt->fetchColumn();
 
         .post-card p {
             font-size: 14px;
-            color: #ffffff; /* Ensure text is white */
+            color: #ffffff;
+            /* Ensure text is white */
         }
 
         .profile-stats {
@@ -363,16 +381,22 @@ $followingCount = $stmt->fetchColumn();
         .profile-stats div span {
             display: block;
             font-size: 14px;
-            color: #ffffff; /* Ensure text is white */
+            color: #ffffff;
+            /* Ensure text is white */
         }
 
-        input, textarea {
-            background-color: #000000; /* Ensure inputs are black */
-            color: #ffffff; /* Ensure text is white */
-            border: 1px solid #ffffff; /* Ensure border is white */
+        input,
+        textarea {
+            background-color: #000000;
+            /* Ensure inputs are black */
+            color: #ffffff;
+            /* Ensure text is white */
+            border: 1px solid #ffffff;
+            /* Ensure border is white */
         }
     </style>
 </head>
+
 <body>
     <div class="sidebar">
         <div class="logo-container">
