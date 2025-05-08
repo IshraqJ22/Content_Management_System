@@ -27,3 +27,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['comment_id'])) {
     echo "<script>alert('Comment deleted successfully.'); window.location.href = 'landing_page.php';</script>";
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Comment</title>
+    <link rel="icon" href="images/icon.ico" type="image/x-icon">
+</head>
+<body>
+</html>

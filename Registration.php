@@ -48,16 +48,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
+    <link rel="icon" href="images/icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="bootstrap.css">
     <style>
         body {
-            background-color: #000000; /* Changed to black */
-            color: #ffffff; /* Changed to white */
+            background-color: #ffffff;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
@@ -76,8 +75,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             max-width: 400px;
             width: 100%;
             text-align: center;
-            background-color: #000000; /* Changed to black */
-            color: #ffffff; /* Changed to white */
         }
 
         .registration-container h1 {
@@ -117,8 +114,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .btn-primary {
-            background-color: #000000; /* Changed to black */
-            color: #ffffff; /* Changed to white */
+            background-color: #f3e8ff;
+            color: #6c63ff;
             border: none;
             padding: 10px 20px;
             font-size: 16px;
@@ -128,11 +125,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .btn-primary:hover {
-            background-color: #333333; /* Adjusted hover color */
+            background-color: #e0d8ff;
         }
     </style>
 </head>
-
 <body>
     <div class="logo-container">
         <img src="images/BLOGr_logo.png" alt="BLOGr Logo">
@@ -180,7 +176,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
 </body>
-
 </html>
 <?php
 $pdo = null;

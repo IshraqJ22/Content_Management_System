@@ -53,6 +53,7 @@ $unreadNotifications = $stmt->fetchColumn();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BLOGr - Home</title>
+    <link rel="icon" href="images/icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="bootstrap.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>

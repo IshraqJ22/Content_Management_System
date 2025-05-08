@@ -162,232 +162,217 @@ $followingCount = $stmt->fetchColumn();
 
 <!DOCTYPE html>
 <html lang="en">
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Profile Page</title>
-<link rel="stylesheet" href="bootstrap.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        background-color: #000000; /* Ensure background is black */
-        color: #ffffff; /* Ensure text is white */
-        display: flex;
-    }
-
-    .sidebar {
-        width: 250px;
-        height: 100vh;
-        background-color: #000000; /* Ensure sidebar is black */
-        color: #ffffff; /* Ensure text is white */
-        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-        position: fixed;
-        top: 0;
-        left: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        overflow-y: auto;
-        padding: 0;
-    }
-
-    .logo-container {
-        text-align: center;
-        margin-top: 0px;
-        margin-bottom: 30px;
-        width: 100%;
-    }
-
-    .logo-container img {
-        width: 400px;
-        height: auto;
-        border-radius: 0;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .sidebar .user-info {
-        text-align: center;
-        margin-bottom: 30px;
-        margin-top: 20px;
-    }
-
-    .sidebar .user-info p {
-        margin: 5px 0;
-    }
-
-    .sidebar .menu {
-        width: 100%;
-    }
-
-    .sidebar .menu a {
-        display: flex;
-        align-items: center;
-        padding: 15px 20px;
-        text-decoration: none;
-        color: #ffffff; /* Ensure text is white */
-        font-size: 16px;
-        transition: background-color 0.3s;
-    }
-
-    .sidebar .menu a:hover {
-        background-color: #333333; /* Adjust hover color */
-    }
-
-    .sidebar .menu a.active {
-        background-color: #000000; /* Ensure active background is black */
-        font-weight: bold;
-    }
-
-    .sidebar .menu .icon {
-        margin-right: 10px;
-        width: 20px;
-        height: 29px;
-    }
-
-    .btn-primary {
-        padding: 5px 10px;
-        font-size: 16px;
-        background-color: #000000; /* Ensure buttons are black */
-        color: #ffffff; /* Ensure text is white */
-        border: 1px solid #ffffff; /* Ensure border is white */
-        border-radius: 20px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-    }
-
-    .btn-primary:hover {
-        background-color: #333333; /* Adjust hover color */
-    }
-
-    .main-content {
-        margin-left: 250px;
-        padding: 20px;
-        flex: 1;
-    }
-
-    .profile-header {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        margin-bottom: 30px;
-    }
-
-    .profile-header img {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        object-fit: cover;
-    }
-
-    .profile-header .profile-info {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .profile-header .profile-info h1 {
-        font-size: 24px;
-        margin: 0;
-    }
-
-    .profile-header .profile-info p {
-        margin: 5px 0;
-        color: #ffffff; /* Ensure text is white */
-    }
-
-    .bio-section {
-        margin-bottom: 30px;
-    }
-
-    .bio-section h2 {
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
-
-    .bio-section p {
-        font-size: 16px;
-        color: #ffffff; /* Ensure text is white */
-    }
-
-    .posts-section {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
-
-    .post-card {
-        background-color: #000000; /* Ensure posts are black */
-        color: #ffffff; /* Ensure text is white */
-        border: 1px solid #333333; /* Adjust border color */
-        border-radius: 5px;
-        width: calc(50% - 10px);
-        padding: 20px;
-    }
-
-    .post-card img {
-        width: 100%;
-        height: auto;
-        border-radius: 5px;
-        margin-bottom: 10px;
-    }
-
-    .post-card h3 {
-        font-size: 18px;
-        margin: 0 0 10px;
-    }
-
-    .post-card p {
-        font-size: 14px;
-        color: #ffffff; /* Ensure text is white */
-    }
-
-    .profile-stats {
-        display: flex;
-        justify-content: space-around;
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
-
-    .profile-stats div {
-        text-align: center;
-        font-size: 16px;
-        font-weight: bold;
-    }
-
-    .profile-stats div span {
-        display: block;
-        font-size: 14px;
-        color: #ffffff; /* Ensure text is white */
-    }
-
-    input, textarea {
-        background-color: #000000; /* Ensure inputs are black */
-        color: #ffffff; /* Ensure text is white */
-        border: 1px solid #ffffff; /* Ensure border is white */
-    }
-</style>
-<script>
-    function toggleSearch() {
-        const searchContainer = document.getElementById('search-container');
-        searchContainer.style.display = searchContainer.style.display === 'none' ? 'block' : 'none';
-    }
-
-    function searchUser() {
-        const username = document.getElementById('search-input').value.trim();
-        if (username) {
-            window.location.href = `user_profile.php?username=${encodeURIComponent(username)}`;
-        } else {
-            alert('Please enter a username to search.');
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="icon" href="images/icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="bootstrap.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000000; /* Ensure background is black */
+            color: #ffffff; /* Ensure text is white */
+            display: flex;
         }
-    }
-</script>
-</head>
 
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #000000; /* Ensure sidebar is black */
+            color: #ffffff; /* Ensure text is white */
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-top: 0px;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .logo-container img {
+            width: 400px;
+            height: auto;
+            border-radius: 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar .user-info {
+            text-align: center;
+            margin-bottom: 30px;
+            margin-top: 20px;
+        }
+
+        .sidebar .user-info p {
+            margin: 5px 0;
+        }
+
+        .sidebar .menu {
+            width: 100%;
+        }
+
+        .sidebar .menu a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            text-decoration: none;
+            color: #ffffff; /* Ensure text is white */
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar .menu a:hover {
+            background-color: #333333; /* Adjust hover color */
+        }
+
+        .sidebar .menu a.active {
+            background-color: #000000; /* Ensure active background is black */
+            font-weight: bold;
+        }
+
+        .sidebar .menu .icon {
+            margin-right: 10px;
+            width: 20px;
+            height: 29px;
+        }
+
+        .btn-primary {
+            padding: 5px 10px;
+            font-size: 16px;
+            background-color: #000000; /* Ensure buttons are black */
+            color: #ffffff; /* Ensure text is white */
+            border: 1px solid #ffffff; /* Ensure border is white */
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            background-color: #333333; /* Adjust hover color */
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .profile-header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-header .profile-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-header .profile-info h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .profile-header .profile-info p {
+            margin: 5px 0;
+            color: #ffffff; /* Ensure text is white */
+        }
+
+        .bio-section {
+            margin-bottom: 30px;
+        }
+
+        .bio-section h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .bio-section p {
+            font-size: 16px;
+            color: #ffffff; /* Ensure text is white */
+        }
+
+        .posts-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .post-card {
+            background-color: #000000; /* Ensure posts are black */
+            color: #ffffff; /* Ensure text is white */
+            border: 1px solid #333333; /* Adjust border color */
+            border-radius: 5px;
+            width: calc(50% - 10px);
+            padding: 20px;
+        }
+
+        .post-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .post-card h3 {
+            font-size: 18px;
+            margin: 0 0 10px;
+        }
+
+        .post-card p {
+            font-size: 14px;
+            color: #ffffff; /* Ensure text is white */
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .profile-stats div {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .profile-stats div span {
+            display: block;
+            font-size: 14px;
+            color: #ffffff; /* Ensure text is white */
+        }
+
+        input, textarea {
+            background-color: #000000; /* Ensure inputs are black */
+            color: #ffffff; /* Ensure text is white */
+            border: 1px solid #ffffff; /* Ensure border is white */
+        }
+    </style>
+</head>
 <body>
     <div class="sidebar">
         <div class="logo-container">

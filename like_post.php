@@ -1,7 +1,17 @@
 <?php
 require 'db_config.php';
 session_start();
-
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Like Post</title>
+    <link rel="icon" href="images/icon.ico" type="image/x-icon">
+</head>
+<body>
+<?php
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['blog_id'])) {
     $blogId = $_POST['blog_id'];
 
@@ -46,3 +56,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['blog_id'])) {
     exit;
 }
 ?>
+</body>
+</html>
