@@ -140,6 +140,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         echo "<script>alert('Comment deleted successfully.'); window.location.href = 'user_management.php';</script>";
     }
+
+    if (isset($_POST['approve_comment'])) {
+        $commentId = $_POST['comment_id'];
+
+        // Approve the comment by updating its status
+        $stmt = $pdo->prepare("UPDATE comments SET status = 'Approved' WHERE comment_id = ?");
+        $stmt->execute([$commentId]);
+
+        echo "<script>alert('Comment approved successfully.'); window.location.href = 'user_management.php';</script>";
+    }
 }
 ?>
 
@@ -556,6 +566,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <td>
                             <form action="user_management.php" method="POST" style="display: inline;">
                                 <input type="hidden" name="comment_id" value="<?php echo $comment['comment_id']; ?>">
+                                <button type="submit" name="approve_comment" class="btn-success">Approve</button>
                                 <button type="submit" name="delete_comment" class="btn-danger">Delete</button>
                             </form>
                         </td>

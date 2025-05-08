@@ -18,8 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['blog_id'], $_POST['com
 
     $userId = $user['user_id'];
 
-    // Insert the comment into the database without requiring approval
-    $stmt = $pdo->prepare("INSERT INTO comments (blog_id, user_id, content, created_at) VALUES (?, ?, ?, NOW())");
+    // Insert the comment into the database with status 'Pending'
+    $stmt = $pdo->prepare("INSERT INTO comments (blog_id, user_id, content, created_at, status) VALUES (?, ?, ?, NOW(), 'Pending')");
     $stmt->execute([$blogId, $userId, $comment]);
 
     // Fetch the post owner's user_id
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['blog_id'], $_POST['com
     if ($postOwner && $postOwner['user_id'] != $userId) {
         // Insert a notification for the post owner
         $stmt = $pdo->prepare("INSERT INTO notifications (user_id, message) VALUES (?, ?)");
-        $stmt->execute([$postOwner['user_id'], "Your post received a new comment."]);
+        $stmt->execute([$postOwner['user_id'], "A new comment on your post is awaiting approval."]);
     }
 
     header("Location: view_post.php?blog_id=$blogId");
