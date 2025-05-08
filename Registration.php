@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="bootstrap.css">
     <style>
         body {
-            background-color: #ffffff;
+            background-color: #000000;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
