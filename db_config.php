@@ -34,6 +34,15 @@ try {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(user_id)
     )");
+
+    // Check if the 'last_activity' column exists
+    $stmt = $pdo->query("SHOW COLUMNS FROM users LIKE 'last_activity'");
+    $columnExists = $stmt->rowCount() > 0;
+
+    // Add the 'last_activity' column if it doesn't exist
+    if (!$columnExists) {
+        $pdo->exec("ALTER TABLE users ADD COLUMN last_activity TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP");
+    }
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage());
 }

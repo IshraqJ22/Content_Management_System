@@ -37,8 +37,17 @@ $stmt = $pdo->prepare("SELECT username, user_id, profile_picture, is_admin FROM 
 $stmt->execute([$username]);
 $user = $stmt->fetch();
 
+// Update the is_online status for inactive users
+$timeoutMinutes = 5;
+$stmt = $pdo->prepare("UPDATE users SET is_online = 0 WHERE is_online = 1 AND last_activity < NOW() - INTERVAL :timeout MINUTE");
+$stmt->execute(['timeout' => $timeoutMinutes]);
+
 // Fetch total online users
 $totalOnlineUsers = $pdo->query("SELECT COUNT(*) FROM users WHERE is_online = 1")->fetchColumn();
+
+// Update the last_activity timestamp for the current user
+$stmt = $pdo->prepare("UPDATE users SET last_activity = NOW() WHERE username = ?");
+$stmt->execute([$username]);
 
 // Fetch unread notifications count
 $stmt = $pdo->prepare("SELECT COUNT(*) FROM notifications WHERE user_id = ? AND is_read = 0");

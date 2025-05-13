@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['username'] = $user['username'];
             $_SESSION['user_id'] = $user['user_id'];
 
+            // Update the user's is_online status to 1
             $stmt = $pdo->prepare("UPDATE users SET is_online = 1 WHERE username = ?");
             $stmt->execute([$user['username']]);
 
