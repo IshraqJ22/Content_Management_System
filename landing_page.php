@@ -45,8 +45,8 @@ $stmt->execute(['timeout' => $timeoutMinutes]);
 // Fetch total online users
 $totalOnlineUsers = $pdo->query("SELECT COUNT(*) FROM users WHERE is_online = 1")->fetchColumn();
 
-// Update the last_activity timestamp for the current user
-$stmt = $pdo->prepare("UPDATE users SET last_activity = NOW() WHERE username = ?");
+// Update the last_activity timestamp and set is_online to 1 for the current user
+$stmt = $pdo->prepare("UPDATE users SET last_activity = NOW(), is_online = 1 WHERE username = ?");
 $stmt->execute([$username]);
 
 // Fetch unread notifications count
