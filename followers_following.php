@@ -41,7 +41,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            background-color: #000000;
             margin: 0;
             display: flex;
         }
@@ -49,7 +49,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .user-list {
             max-width: 600px;
             margin: 20px auto;
-            background-color: #ffffff;
+            background-color: #000000;
             border: 1px solid #ddd;
             border-radius: 5px;
             padding: 20px;
@@ -97,7 +97,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .sidebar {
             width: 250px;
             height: 100vh;
-            background-color: #ffffff;
+            background-color: #000000;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 0;
@@ -119,7 +119,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             width: 400px;
             height: auto;
             border-radius: 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px #000000;
         }
 
         .sidebar .menu {
@@ -137,11 +137,11 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         .sidebar .menu a:hover {
-            background-color: #f0f0f0;
+            background-color: #000000;
         }
 
         .sidebar .menu a.active {
-            background-color: #ffffff;
+            background-color: #000000;
             font-weight: bold;
         }
 
