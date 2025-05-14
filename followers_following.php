@@ -59,6 +59,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             font-size: 24px;
             margin-bottom: 20px;
             text-align: center;
+            
         }
 
         .user-item {
@@ -67,10 +68,12 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             margin-bottom: 15px;
             padding: 10px;
             border-bottom: 1px solid #ddd;
+            
         }
 
         .user-item:last-child {
             border-bottom: none;
+            
         }
 
         .user-item img {
@@ -79,6 +82,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             border-radius: 50%;
             object-fit: cover;
             margin-right: 15px;
+            
         }
 
         .user-item a {
@@ -86,12 +90,14 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             color: #333;
             font-size: 16px;
             font-weight: bold;
+            color: #FFFFFF;
         }
 
         .user-item span {
             display: block;
             font-size: 14px;
             color: #666;
+            
         }
 
         .sidebar {
@@ -113,6 +119,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             margin-top: 0px;
             margin-bottom: 30px;
             width: 100%;
+            
         }
 
         .logo-container img {
@@ -124,6 +131,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         .sidebar .menu {
             width: 100%;
+            
         }
 
         .sidebar .menu a {
@@ -134,6 +142,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             color: #333;
             font-size: 16px;
             transition: background-color 0.3s;
+            color: #FFFFFF;
         }
 
         .sidebar .menu a:hover {
