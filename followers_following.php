@@ -157,7 +157,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .sidebar .menu .icon {
             margin-right: 10px;
             width: 20px;
-            height: 20px;
+            height: 30px;
         }
 
         .main-content {
