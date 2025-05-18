@@ -2,7 +2,7 @@
 $host = 'localhost';
 $dbname = 'cms';
 $username = 'root';
-$password = 'Xribmssjrx22'; // Replace with your actual password
+$password = ''; // Replace with your actual password
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
